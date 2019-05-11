@@ -18,7 +18,8 @@
         </label>
         <br>
         <label for="remember-me">
-            <input type="checkbox" id="remember-me" name="remember-me"></label>
+            <input type="checkbox" id="remember-me" name="remember-me">
+        </label>
         <input type="submit" value="Login">
     </form>
 </div>

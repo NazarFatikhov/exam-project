@@ -36,12 +36,12 @@ public class SignUpController {
         return "redirect:/signin";
     }
     
-    @RequestMapping(path = "/signup-teacher", method = RequestMethod.GET)
+    @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.GET)
     public String showSignUpTeacher(){
         return "signup-teacher";
     }
     
-    @RequestMapping(path = "/signup-teacher", method = RequestMethod.POST)
+    @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.POST)
     public String addTeacher(SignUpForm userForm){
         signUpService.signUpteacher(userForm);
         return "redirect:/signin";

@@ -1,9 +1,5 @@
-<#ftl encoding='UTF-8'>
-<html>
-<head>
-    <link href="/css/styles.css" rel="stylesheet">
-</head>
-<body>
+<#import "macros/main.ftl" as main>
+<@main.cover>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Please sign up
@@ -28,5 +24,4 @@
         <input type="submit" value="SignUp">
     </form>
 </div>
-</body>
-</html>
+</@main.cover>

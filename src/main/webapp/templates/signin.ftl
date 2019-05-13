@@ -1,27 +1,23 @@
-<#ftl encoding='UTF-8'>
-<html>
-<head>
-    <link href="/css/styles.css" rel="stylesheet">
-</head>
-<body>
+<#import "macros/main.ftl" as main>
+<@main.cover>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Please Login!
-    </div>
+        </div>
     <form method="post" action="/signin">
         <label for="emailAdress">
             <input class="input-field" type="text" id="login" name="emailAdress">
-        </label>
+            </label>
         <br>
         <label for="password">
             <input class="input-field" type="password" id="password" name="password">
-        </label>
+            </label>
         <br>
         <label for="remember-me">
             <input type="checkbox" id="remember-me" name="remember-me">
-        </label>
+            </label>
         <input type="submit" value="Login">
-    </form>
+        </form>
+    </div>
 </div>
-</body>
-</html>
+</@main.cover>

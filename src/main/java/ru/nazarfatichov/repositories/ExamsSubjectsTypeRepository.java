@@ -3,20 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.repositories;
 
-import java.util.List;
-import ru.nazarfatichov.forms.SubjectForm;
+import java.io.Serializable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.nazarfatichov.models.ExamsSubjectsType;
-import ru.nazarfatichov.models.Subject;
 
 /**
  *
  * @author nazar
  */
-public interface SubjectService {
-    
-    void addSubject(SubjectForm subjectForm);
-    
-    List<Subject> getAllSubjects();
+public interface ExamsSubjectsTypeRepository extends JpaRepository<ExamsSubjectsType, Long>{
 }

@@ -1,9 +1,5 @@
-<#ftl encoding='UTF-8'>
-<html>
-<head>
-    <link href="/css/styles.css" rel="stylesheet">
-</head>
-<body>
+<#import "macros/main.ftl" as main>
+<@main.cover>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Create teacher
@@ -28,6 +24,4 @@
         <input type="submit" value="Sign Up Teacher">
     </form>
 </div>
-</body>
-</html>
-
+</@main.cover>

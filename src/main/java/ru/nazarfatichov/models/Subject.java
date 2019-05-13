@@ -27,11 +27,11 @@ public class Subject {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)       
-    Long id;
+    private Long id;
     
-    @Column(nullable = false)
-    String name;
+    @Column(nullable = false, unique = true)
+    private String name;
     
     @Enumerated(value = EnumType.STRING)
-    SubjectState state;
+    private SubjectState state;
 }

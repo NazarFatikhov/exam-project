@@ -31,11 +31,11 @@ public class UserInformation {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     
     @Column(nullable = false)
-    String name;
+    private String name;
     @Column(nullable = false)
-    String surname;
+    private String surname;
     
 }

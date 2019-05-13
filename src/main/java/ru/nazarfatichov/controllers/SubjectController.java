@@ -9,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.forms.SubjectForm;
-import ru.nazarfatichov.repositories.SubjectRepository;
 import ru.nazarfatichov.services.SubjectService;
-import ru.nazarfatichov.services.SubjectServiceImpl;
 
 /**
  *
@@ -24,15 +23,17 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
     
-    @RequestMapping(path = "/admin/add-subject", method = RequestMethod.GET)
-    public String showAddSubjectPaget(){
-        return "add-subject";
+    @RequestMapping(path = "/admin/subjects", method = RequestMethod.GET)
+    public ModelAndView showAllSubjects(){
+        ModelAndView modelAndView = new ModelAndView("subjects");
+        modelAndView.addObject("subjectsFromServer", subjectService.getAllSubjects());
+        return modelAndView;
     }
     
     @RequestMapping(path = "/admin/add-subject", method = RequestMethod.POST)
     public String addSubject(SubjectForm subjectForm){
         subjectService.addSubject(subjectForm);
-        return "redirect:/users";
+        return "redirect:/admin/subjects";
     }
     
 }

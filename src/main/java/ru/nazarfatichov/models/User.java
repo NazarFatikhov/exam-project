@@ -33,13 +33,13 @@ public class User{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     
     @Column(name = "email_adress", nullable = false, unique = true)
-    String emailAdress;
+    private String emailAdress;
     
     @Column(name = "hash_password", nullable = false)
-    String hashPassword;
+    private String hashPassword;
     
     @Enumerated(value = EnumType.STRING)
     private Role role;

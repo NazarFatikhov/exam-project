@@ -5,10 +5,12 @@
  */
 package ru.nazarfatichov.services;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nazarfatichov.enums.SubjectState;
 import ru.nazarfatichov.forms.SubjectForm;
+import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.models.Subject;
 import ru.nazarfatichov.repositories.SubjectRepository;
 
@@ -32,5 +34,11 @@ public class SubjectServiceImpl implements SubjectService{
         
         subjectRepository.save(subject);
     }
+
+    @Override
+    public List<Subject> getAllSubjects() {
+        return subjectRepository.findAll();
+    }
+    
     
 }

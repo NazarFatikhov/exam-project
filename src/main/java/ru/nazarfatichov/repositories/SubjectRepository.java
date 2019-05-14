@@ -13,4 +13,5 @@ import ru.nazarfatichov.models.Subject;
  * @author nazar
  */
 public interface SubjectRepository extends JpaRepository<Subject, Long>{
+    Subject findOneByName(String name);
 }

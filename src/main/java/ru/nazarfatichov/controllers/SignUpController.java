@@ -23,7 +23,7 @@ import ru.nazarfatichov.services.SignUpService;
 public class SignUpController {
     
     @Autowired
-    SignUpService signUpService;
+    private SignUpService signUpService;
     
     @RequestMapping(path = "/signup", method = RequestMethod.GET)
     public String showSignUpPage() {

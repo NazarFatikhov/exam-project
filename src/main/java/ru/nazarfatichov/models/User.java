@@ -50,13 +50,6 @@ public class User{
     @OneToOne(targetEntity = UserInformation.class, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_information_id")
     private UserInformation userInformation;
-    
-    public static User from(UserForm form) {
-        return User.builder()
-                .emailAdress(form.getEmail())
-                .hashPassword(form.getPassword())
-                .build();
-    }
 
-    
+
 }

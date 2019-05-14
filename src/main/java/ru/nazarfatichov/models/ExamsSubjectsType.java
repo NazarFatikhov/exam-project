@@ -1,22 +1,15 @@
 package ru.nazarfatichov.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GeneratorType;
 import ru.nazarfatichov.enums.Type;
+import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
+import ru.nazarfatichov.forms.UserForm;
 
 /**
  *
@@ -27,14 +20,13 @@ import ru.nazarfatichov.enums.Type;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "exams_subject_type")
+@Table(name = "exams_subject_type", uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "subject_id"})})
 public class ExamsSubjectsType {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(unique = true)
     @Enumerated (value = EnumType.STRING)
     private Type type;
     
@@ -47,7 +39,6 @@ public class ExamsSubjectsType {
     private Integer tasksCount;
     
     @ManyToOne(targetEntity = Subject.class)
-    @JoinColumn(name = "subject_id", unique = true)
+    @JoinColumn(name = "subject_id")
     private Subject subject;
-    
 }

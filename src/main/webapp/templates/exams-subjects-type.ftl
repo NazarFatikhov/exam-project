@@ -4,9 +4,9 @@
     <div class="form-style-2-heading">
         Add Exams types with subjects
     </div>
-    <form method="post" action="/signup-teacher">
-        <label for="min-score">Type
-            <select class="custom-select">
+    <form method="post" action="/admin/exams-subjects-type">
+        <label for="type">Type
+            <select class="custom-select" name="type" id="type">
                 <option selected>Choose type</option>
                 <#list typesFromServer as typeName>
                     <option value="${typeName}">${typeName}</option>
@@ -14,23 +14,56 @@
             </select>
         </label>
         <br>
-        <label for="min-score">Min score
-            <input class="input-field" type="text" id="min-score" name="min-score">
+        <label for="minScore">Min score
+            <input class="input-field" type="text" id="minScore" name="minScore">
         </label>
         <br>
-        <label for="max-score">Max Score
-            <input class="input-field" type="text" id="max-score" name="max-score">
+        <label for="maxScore">Max Score
+            <input class="input-field" type="text" id="maxScore" name="maxScore">
         </label>
         <br>
-        <label for="tesk-count">Max Score
-            <input class="input-field" type="text" id="tesk-count" name="tesk-count">
+        <label for="taskCount">Task count
+            <input class="input-field" type="text" id="taskCount" name="taskCount">
         </label>
         <br>
-        <label for="password">Password
-            <input class="input-field" type="password" id="password" name="password">
+        <label for="subject">Subject
+            <select class="custom-select" name="subject" id="subject">
+            <option selected>Choose type</option>
+                <#list subjectsFromServer as subject>
+                    <option value="${subject.getName()}">${subject.getName()}</option>
+                </#list>
+            </select>
         </label>
         <br>
-        <input type="submit" value="Sign Up Teacher">
+        <input type="submit" value="Add exmam's subjet type">
+        <br>
+        <div class="form-style-2">
+        <div class="form-style-2-heading">
+            Exam's types wiht subject in System!
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Type</th>
+                <th>Min Score</th>
+                <th>Max Score</th>
+                <th>Task count</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list examsSubjectsTypes as examSubjectType>
+                <tr>
+                    <td>${examSubjectType.getSubject().getName()}</td>
+                    <td>${examSubjectType.getType()}</td>
+                    <td>${examSubjectType.getMinScore()}</td>
+                    <td>${examSubjectType.getMaxScore()}</td>
+                    <td>${examSubjectType.getTasksCount()}</td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
+        </div>
     </form>
 </div>
 </@main.cover>

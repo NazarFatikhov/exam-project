@@ -19,12 +19,12 @@ import ru.nazarfatichov.repositories.UsersRepository;
 public class SignUpServiceImpl implements SignUpService{
     
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     
     @Autowired
-    UsersRepository userRepository;
+    private UsersRepository userRepository;
     @Autowired
-    UserInformationRepository userInformationRepository;
+    private UserInformationRepository userInformationRepository;
     
     @Override
     public void signUp(SignUpForm signUpForm) {

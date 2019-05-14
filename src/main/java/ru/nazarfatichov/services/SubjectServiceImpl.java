@@ -9,9 +9,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nazarfatichov.enums.SubjectState;
+import ru.nazarfatichov.enums.Type;
+import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
 import ru.nazarfatichov.forms.SubjectForm;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.models.Subject;
+import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.SubjectRepository;
 
 /**
@@ -22,7 +25,10 @@ import ru.nazarfatichov.repositories.SubjectRepository;
 public class SubjectServiceImpl implements SubjectService{
 
     @Autowired
-    SubjectRepository subjectRepository;
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
     
     @Override
     public void addSubject(SubjectForm subjectForm) {
@@ -35,10 +41,28 @@ public class SubjectServiceImpl implements SubjectService{
         subjectRepository.save(subject);
     }
 
-    @Override
     public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
     }
-    
-    
+
+    @Override
+    public void addExamsSubjectsType(ExamsSubjectsTypesForm examsSubjectsTypesForm) {
+        Subject subject = subjectRepository.findOneByName(examsSubjectsTypesForm.getSubject());
+
+        ExamsSubjectsType examsSubjectsType = ExamsSubjectsType.builder()
+                .maxScore(Integer.parseInt(examsSubjectsTypesForm.getMaxScore()))
+                .minScore(Integer.parseInt(examsSubjectsTypesForm.getMinScore()))
+                .subject(subject)
+                .type(Type.valueOf(examsSubjectsTypesForm.getType()))
+                .tasksCount(Integer.parseInt(examsSubjectsTypesForm.getTaskCount()))
+                .build();
+
+        examsSubjectsTypeRepository.save(examsSubjectsType);
+    }
+
+    public List<ExamsSubjectsType> getAllExamsSubjectTypesFromServer(){
+        return examsSubjectsTypeRepository.findAll();
+    }
+
+
 }

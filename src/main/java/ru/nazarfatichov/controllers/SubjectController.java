@@ -21,7 +21,7 @@ import ru.nazarfatichov.services.SubjectService;
 public class SubjectController {
     
     @Autowired
-    SubjectService subjectService;
+    private SubjectService subjectService;
     
     @RequestMapping(path = "/admin/subjects", method = RequestMethod.GET)
     public ModelAndView showAllSubjects(){

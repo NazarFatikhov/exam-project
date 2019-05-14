@@ -25,7 +25,7 @@ import ru.nazarfatichov.repositories.UsersRepository;
 public class UsersController {
     
     @Autowired
-    UsersRepository usersRepository;
+    private UsersRepository usersRepository;
     
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ModelAndView getUsers(Principal principal){

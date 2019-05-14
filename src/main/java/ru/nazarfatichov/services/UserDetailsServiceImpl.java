@@ -18,7 +18,7 @@ import ru.nazarfatichov.security.details.UserDetailsImpl;
 public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
-    UsersRepository newUserRepository;
+    private UsersRepository newUserRepository;
     
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {

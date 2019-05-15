@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.UsersRepository;
+import ru.nazarfatichov.services.StudentService;
 
 /**
  *
@@ -26,11 +27,15 @@ public class UsersController {
     
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private StudentService studentService;
     
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ModelAndView getUsers(Principal principal){
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
         ModelAndView modelAndView = new ModelAndView("users");
+        modelAndView.addObject("usersSubjectInformations", studentService.getStudentSubjectInformation(user.get().getId()));
         modelAndView.addObject("userName", user.get().getUserInformation().getName());
         modelAndView.addObject("userSurname", user.get().getUserInformation().getSurname());
         return modelAndView;

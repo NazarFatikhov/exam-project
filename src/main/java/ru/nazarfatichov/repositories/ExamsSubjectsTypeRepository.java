@@ -6,6 +6,8 @@
 package ru.nazarfatichov.repositories;
 
 import java.io.Serializable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 

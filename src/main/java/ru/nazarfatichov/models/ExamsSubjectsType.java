@@ -2,10 +2,7 @@ package ru.nazarfatichov.models;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GeneratorType;
 import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
@@ -41,4 +38,9 @@ public class ExamsSubjectsType {
     @ManyToOne(targetEntity = Subject.class)
     @JoinColumn(name = "subject_id")
     private Subject subject;
+
+    @Override
+    public String toString() {
+        return "(" + type.name() + ")" + " " + subject.getName();
+    }
 }

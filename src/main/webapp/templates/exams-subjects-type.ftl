@@ -28,7 +28,7 @@
         <br>
         <label for="subject">Subject
             <select class="custom-select" name="subject" id="subject">
-            <option selected>Choose type</option>
+                <option selected>Choose type</option>
                 <#list subjectsFromServer as subject>
                     <option value="${subject.getName()}">${subject.getName()}</option>
                 </#list>
@@ -37,7 +37,8 @@
         <br>
         <input type="submit" value="Add exmam's subjet type">
         <br>
-        <div class="form-style-2">
+    </form>
+    <div class="form-style-2">
         <div class="form-style-2-heading">
             Exam's types wiht subject in System!
         </div>
@@ -53,17 +54,16 @@
             </thead>
             <tbody>
             <#list examsSubjectsTypes as examSubjectType>
-                <tr>
-                    <td>${examSubjectType.getSubject().getName()}</td>
-                    <td>${examSubjectType.getType()}</td>
-                    <td>${examSubjectType.getMinScore()}</td>
-                    <td>${examSubjectType.getMaxScore()}</td>
-                    <td>${examSubjectType.getTasksCount()}</td>
-                </tr>
+            <tr>
+                <td>${examSubjectType.getSubject().getName()}</td>
+                <td>${examSubjectType.getType()}</td>
+                <td>${examSubjectType.getMinScore()}</td>
+                <td>${examSubjectType.getMaxScore()}</td>
+                <td>${examSubjectType.getTasksCount()}</td>
+            </tr>
             </#list>
             </tbody>
         </table>
-        </div>
-    </form>
+    </div>
 </div>
 </@main.cover>

@@ -37,5 +37,9 @@ public class UserInformation {
     private String name;
     @Column(nullable = false)
     private String surname;
-    
+
+    @Override
+    public String toString() {
+        return name + " " + surname;
+    }
 }

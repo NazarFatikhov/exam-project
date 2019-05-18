@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  * @author nazar
  */
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -32,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/sigin").permitAll()
                     .antMatchers("/signup").permitAll()
                     .antMatchers("/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/teacher/**").hasAuthority("TEACHER")
                     .and()
                 .formLogin()
                     .usernameParameter("emailAdress")

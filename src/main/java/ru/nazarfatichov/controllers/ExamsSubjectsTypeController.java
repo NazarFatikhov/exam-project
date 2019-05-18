@@ -14,6 +14,7 @@ import ru.nazarfatichov.models.Subject;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.SubjectRepository;
 import ru.nazarfatichov.services.SubjectService;
+import ru.nazarfatichov.transfer.ExamsSubjectsTypeDTO;
 
 /**
  *
@@ -28,10 +29,13 @@ public class ExamsSubjectsTypeController {
 
     @RequestMapping(value = "/admin/exams-subjects-type", method = RequestMethod.GET)
     public ModelAndView showAllExamsSubjectsTypes(){
+        ExamsSubjectsTypeDTO examsSubjectsTypesDTO = ExamsSubjectsTypeDTO.builder()
+                .examsSubjectsTypes(subjectService.getAllExamsSubjectTypesFromServer())
+                .subjects(subjectService.getAllSubjects())
+                .types(Arrays.asList(Type.values()))
+                .build();
         ModelAndView modelAndView = new ModelAndView("exams-subjects-type");
-        modelAndView.addObject("subjectsFromServer", subjectService.getAllSubjects());
-        modelAndView.addObject("typesFromServer", Arrays.asList(Type.values()));
-        modelAndView.addObject("examsSubjectsTypes", subjectService.getAllExamsSubjectTypesFromServer());
+        modelAndView.addObject("examsSubjectsTypeDTO", examsSubjectsTypesDTO);
         return modelAndView;
     }
 

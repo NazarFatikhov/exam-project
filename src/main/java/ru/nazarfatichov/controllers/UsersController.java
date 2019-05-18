@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
+import ru.nazarfatichov.transfer.UserDTO;
 
 /**
  *
@@ -35,9 +36,12 @@ public class UsersController {
     public ModelAndView getUsers(Principal principal){
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
         ModelAndView modelAndView = new ModelAndView("users");
-        modelAndView.addObject("usersSubjectInformations", studentService.getStudentSubjectInformation(user.get().getId()));
-        modelAndView.addObject("userName", user.get().getUserInformation().getName());
-        modelAndView.addObject("userSurname", user.get().getUserInformation().getSurname());
+        UserDTO userDTO = UserDTO.builder()
+                .userName(user.get().getUserInformation().getName())
+                .userSurname(user.get().getUserInformation().getSurname())
+                .studentSubjectInformation(studentService.getStudentSubjectInformation(user.get().getId()))
+                .build();
+        modelAndView.addObject("userDTO", userDTO);
         return modelAndView;
     }
 }

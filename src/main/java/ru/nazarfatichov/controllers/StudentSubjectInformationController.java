@@ -10,6 +10,7 @@ import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.Subject;
 import ru.nazarfatichov.services.StudentService;
 import ru.nazarfatichov.services.SubjectService;
+import ru.nazarfatichov.transfer.StudentSubjectInformationDTO;
 
 @Controller
 public class StudentSubjectInformationController {
@@ -22,9 +23,12 @@ public class StudentSubjectInformationController {
 
     @RequestMapping(path = "/admin/student-subject-information", method = RequestMethod.GET)
     public ModelAndView showStudentsSubjectInformation(){
+        StudentSubjectInformationDTO studentSubjectInformationDTO = StudentSubjectInformationDTO.builder()
+                .examsSubjectsTypes(subjectService.getAllExamsSubjectTypesFromServer())
+                .students(studentService.getAllStudentsFromServer())
+                .build();
         ModelAndView modelAndView = new ModelAndView("student-subject-information");
-        modelAndView.addObject("subjectsWithTypes", subjectService.getAllExamsSubjectTypesFromServer());
-        modelAndView.addObject("students", studentService.getAllStudentsFromServer());
+        modelAndView.addObject("studentSubjectInformationDTO", studentSubjectInformationDTO);
         return modelAndView;
     }
 

@@ -8,7 +8,7 @@
         <label for="student">Student
             <select class="custom-select" name="student" id="student">
                 <option selected>choose student</option>
-                <#list students as student>
+                <#list studentSubjectInformationDTO.getStudents() as student>
                     <option value="${student.getId()}">${student.getUserInformation().getSurname()} ${student.getUserInformation().getSurname()}</option>
                 </#list>
             </select>
@@ -17,7 +17,7 @@
         <label for="examsSubjectsType">Type
             <select class="custom-select" name="examsSubjectsType" id="examsSubjectsType">
                 <option selected>choose type and subject</option>
-                <#list subjectsWithTypes as subjectsWithType>
+                <#list studentSubjectInformationDTO.getExamsSubjectsTypes() as subjectsWithType>
                     <option value="${subjectsWithType.getId()}">${subjectsWithType.getSubject().getName()} ${subjectsWithType.getType()}</option>
                 </#list>
             </select>

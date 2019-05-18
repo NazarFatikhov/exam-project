@@ -8,7 +8,7 @@
         <label for="type">Type
             <select class="custom-select" name="type" id="type">
                 <option selected>Choose type</option>
-                <#list typesFromServer as typeName>
+                <#list examsSubjectsTypeDTO.getTypes() as typeName>
                     <option value="${typeName}">${typeName}</option>
                 </#list>
             </select>
@@ -29,7 +29,7 @@
         <label for="subject">Subject
             <select class="custom-select" name="subject" id="subject">
                 <option selected>Choose type</option>
-                <#list subjectsFromServer as subject>
+                <#list examsSubjectsTypeDTO.getSubjects() as subject>
                     <option value="${subject.getName()}">${subject.getName()}</option>
                 </#list>
             </select>
@@ -53,7 +53,7 @@
             </tr>
             </thead>
             <tbody>
-            <#list examsSubjectsTypes as examSubjectType>
+            <#list examsSubjectsTypeDTO.getExamsSubjectsTypes() as examSubjectType>
             <tr>
                 <td>${examSubjectType.getSubject().getName()}</td>
                 <td>${examSubjectType.getType()}</td>

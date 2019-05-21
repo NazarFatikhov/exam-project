@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.ExamForm;
-import ru.nazarfatichov.models.Exam;
-import ru.nazarfatichov.models.ExamsSubjectsType;
-import ru.nazarfatichov.models.User;
-import ru.nazarfatichov.repositories.ExamRepository;
-import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
-import ru.nazarfatichov.repositories.UsersRepository;
+import ru.nazarfatichov.forms.ExamTypeTaskForm;
+import ru.nazarfatichov.models.*;
+import ru.nazarfatichov.repositories.*;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,37 +24,70 @@ import java.util.stream.IntStream;
 public class ExamServiceImpl implements ExamService{
 
     @Autowired
-    ExamRepository examRepository;
+    private ExamRepository examRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    private UsersRepository usersRepository;
 
     @Autowired
-    ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
+    private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
+
+    @Autowired
+    private ExamsTypeTaskRepository examsTypeTaskRepository;
+
+    @Autowired
+    private ExamsTasksRepository examsTasksRepository;
 
     @Override
     public void addExam(ExamForm examForm) throws IncorrectSumOfTasksException, ParseException {
-            User student = usersRepository.findOne(examForm.getStudentId());
-            User teacher = usersRepository.findOne(examForm.getTeacherId());
-            ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examForm.getTypeId());
+        User student = usersRepository.findOne(examForm.getStudentId());
+        User teacher = usersRepository.findOne(examForm.getTeacherId());
+        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examForm.getTypeId());
 
-            SimpleDateFormat simpleFormatter = new SimpleDateFormat("YYYY-mm-dd");
-            Date date = simpleFormatter.parse(examForm.getDate());
+        SimpleDateFormat simpleFormatter = new SimpleDateFormat("YYYY-mm-dd");
+        Date date = simpleFormatter.parse(examForm.getDate());
 
-            Integer totalScore = Arrays.stream(examForm.getScores()).mapToInt(Integer::intValue).sum();
+        Integer[] scores = examForm.getScores();
 
-            Exam exam = Exam.builder()
-                    .student(student)
-                    .teacher(teacher)
-                    .date(date)
-                    .examsSubjectsType(examsSubjectsType)
-                    .totalScore(totalScore)
+        Integer totalScore = Arrays.stream(scores).mapToInt(Integer::intValue).sum();
+
+
+        Exam exam = Exam.builder()
+                .student(student)
+                .teacher(teacher)
+                .date(date)
+                .examsSubjectsType(examsSubjectsType)
+                .totalScore(totalScore)
+                .build();
+
+        if(exam.getTotalScore() > examsSubjectsType.getMaxScore() || exam.getTotalScore() < examsSubjectsType.getMinScore()){
+            throw new IncorrectSumOfTasksException();
+        }
+
+        examRepository.save(exam);
+
+        ExamsTasks examsTasks = null;
+        for (int i = 0; i < scores.length; i++) {
+            examsTasks = ExamsTasks.builder()
+                    .exam(exam)
+                    .examsTypeTask(examsTypeTaskRepository.findFirstByTasksNumberAndExamsSubjectsType_Id(i + 1, examsSubjectsType.getId()))
+                    .score(scores[i])
                     .build();
 
-            if(exam.getTotalScore() > examsSubjectsType.getMaxScore() || exam.getTotalScore() < examsSubjectsType.getMinScore()){
-                throw new IncorrectSumOfTasksException();
-            }
+            examsTasksRepository.save(examsTasks);
+        }
 
-            examRepository.save(exam);
+    }
+
+    @Override
+    public void addExamsTypeTask(ExamTypeTaskForm examTypeTaskForm) {
+        ExamsTypeTask examsTypeTask = ExamsTypeTask.builder()
+                .examsSubjectsType(examsSubjectsTypeRepository.findOne(examTypeTaskForm.getTypeId()))
+                .tasksNumber(examTypeTaskForm.getTaskNumber())
+                .minScore(examTypeTaskForm.getMinScore())
+                .maxScore(examTypeTaskForm.getMaxScore())
+                .build();
+
+        examsTypeTaskRepository.save(examsTypeTask);
     }
 }

@@ -15,10 +15,15 @@
         <#list userDTO.getStudentSubjectInformation() as usersSubjectInformation>
         <tr>
             <td><b>${usersSubjectInformation.getExamsSubjectsType().toString()}</b></td>
+            <#if usersSubjectInformation.getAverageExamScore()?? ||
+                usersSubjectInformation.getLastExamScore()?? ||
+                usersSubjectInformation.getAverageTestScore()?? ||
+                usersSubjectInformation.getLastTestScore()??>
             <td>${usersSubjectInformation.getAverageExamScore()}</td>
             <td>${usersSubjectInformation.getLastExamScore()}</td>
             <td>${usersSubjectInformation.getAverageTestScore()}</td>
             <td>${usersSubjectInformation.getLastTestScore()}</td>
+            </#if>
         </tr>
         </#list>
     </table>

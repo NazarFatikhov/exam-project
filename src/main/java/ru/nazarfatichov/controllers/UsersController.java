@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.models.User;
+import ru.nazarfatichov.models.UserInformation;
+import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
 import ru.nazarfatichov.transfer.UserDTO;
@@ -31,14 +33,18 @@ public class UsersController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private UserInformationRepository userInformationRepository;
     
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ModelAndView getUsers(Principal principal){
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
+        UserInformation userInformation = userInformationRepository.findFirstByUser_Id(user.get().getId());
         ModelAndView modelAndView = new ModelAndView("users");
         UserDTO userDTO = UserDTO.builder()
-                .userName(user.get().getUserInformation().getName())
-                .userSurname(user.get().getUserInformation().getSurname())
+                .userName(userInformation.getName())
+                .userSurname(userInformation.getSurname())
                 .studentSubjectInformation(studentService.getStudentSubjectInformation(user.get().getId()))
                 .build();
         modelAndView.addObject("userDTO", userDTO);

@@ -13,5 +13,5 @@ import ru.nazarfatichov.models.UserInformation;
  * @author nazar
  */
 public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {
-    
+    UserInformation findFirstByUser_Id(Long id);
 }

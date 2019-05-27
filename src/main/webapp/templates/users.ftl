@@ -21,8 +21,6 @@
                 usersSubjectInformation.getLastTestScore()??>
             <td>${usersSubjectInformation.getAverageExamScore()}</td>
             <td>${usersSubjectInformation.getLastExamScore()}</td>
-            <td>${usersSubjectInformation.getAverageTestScore()}</td>
-            <td>${usersSubjectInformation.getLastTestScore()}</td>
             </#if>
         </tr>
         </#list>

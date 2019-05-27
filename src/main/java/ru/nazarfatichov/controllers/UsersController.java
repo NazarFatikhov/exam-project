@@ -20,6 +20,7 @@ import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
 import ru.nazarfatichov.transfer.UserDTO;
+import ru.nazarfatichov.transfer.UserWithSubjectsDTO;
 
 /**
  *
@@ -42,12 +43,12 @@ public class UsersController {
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
         UserInformation userInformation = userInformationRepository.findFirstByUser_Id(user.get().getId());
         ModelAndView modelAndView = new ModelAndView("users");
-        UserDTO userDTO = UserDTO.builder()
+        UserWithSubjectsDTO userWithSubjectsDTO = UserWithSubjectsDTO.builder()
                 .userName(userInformation.getName())
                 .userSurname(userInformation.getSurname())
                 .studentSubjectInformation(studentService.getStudentSubjectInformation(user.get().getId()))
                 .build();
-        modelAndView.addObject("userDTO", userDTO);
+        modelAndView.addObject("userDTO", userWithSubjectsDTO);
         return modelAndView;
     }
 }

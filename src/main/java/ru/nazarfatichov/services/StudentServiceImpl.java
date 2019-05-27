@@ -7,10 +7,9 @@ import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.models.StudentSubjectInformation;
 import ru.nazarfatichov.models.User;
-import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
-import ru.nazarfatichov.repositories.StudentSubjectInformationRepository;
-import ru.nazarfatichov.repositories.SubjectRepository;
-import ru.nazarfatichov.repositories.UsersRepository;
+import ru.nazarfatichov.models.UserInformation;
+import ru.nazarfatichov.repositories.*;
+import ru.nazarfatichov.transfer.UserDTO;
 
 import java.util.List;
 
@@ -25,6 +24,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
+
+    @Autowired
+    private UserInformationRepository userInformationRepository;
 
     @Override
     public List<User> getAllStudentsFromServer() {
@@ -51,4 +53,5 @@ public class StudentServiceImpl implements StudentService {
         studentSubjectInformationRepository.save(studentSubjectInformation);
 
     }
+
 }

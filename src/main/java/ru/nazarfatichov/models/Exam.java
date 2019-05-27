@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "exam", uniqueConstraints = {@UniqueConstraint(columnNames = {"student_id", "type_id", "teacher_id"})})
+@Table(name = "exam")
 public class Exam {
 
     @Id

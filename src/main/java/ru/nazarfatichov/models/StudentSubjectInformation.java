@@ -36,5 +36,9 @@ public class StudentSubjectInformation {
     private Integer lastExamScore;
     @Column(name = "last_test_score")
     private Integer lastTestScore;
+    @Column(name = "exam_count")
+    private Integer examCount;
+    @Column(name = "test_count")
+    private Integer testCount;
 
 }

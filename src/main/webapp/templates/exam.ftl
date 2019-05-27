@@ -19,8 +19,8 @@
             <label for="student">Student
                 <select class="custom-select" name="studentId" id="student">
                     <option selected>Choose student</option>
-                <#list students as student>
-                    <option value="${student.getId()}">${student.getUserInformation().toString()}</option>
+                <#list studentsInformation as studentInformation>
+                    <option value="${studentInformation.getUser().getId()}">${studentInformation.toString()}</option>
                 </#list>
                 </select>
             </label>
@@ -29,8 +29,8 @@
             <label for="teacher">Student
                 <select class="custom-select" name="teacherId" id="teacher">
                     <option selected>Choose teacher</option>
-                <#list teachers as teacher>
-                    <option value="${teacher.getId()}">${teacher.getUserInformation().toString()}</option>
+                <#list teachersInformation as teacherInformation>
+                    <option value="${teacherInformation.getUser().getId()}">${teacherInformation.toString()}</option>
                 </#list>
                 </select>
             </label>

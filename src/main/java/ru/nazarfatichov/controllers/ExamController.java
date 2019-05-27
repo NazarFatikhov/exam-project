@@ -11,6 +11,7 @@ import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.ExamForm;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
+import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.ExamService;
 import ru.nazarfatichov.services.StudentService;
@@ -38,13 +39,16 @@ public class ExamController {
     @Autowired
     private ExamService examService;
 
+    @Autowired
+    private UserInformationRepository userInformationRepository;
+
     @RequestMapping(path = "/teacher/exam/{exams-subjects-type-id}", method = RequestMethod.GET)
     public ModelAndView showExamPage(@PathVariable("exams-subjects-type-id") Long examsSubjectTypeId){
         ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examsSubjectTypeId);
         ModelAndView modelAndView = new ModelAndView("exam");
         modelAndView.addObject("taskCount", examsSubjectsType.getTasksCount());
-        modelAndView.addObject("students", studentService.getAllStudentsFromServer());
-        modelAndView.addObject("teachers", usersRepository.findAllByRole(Role.TEACHER));
+        modelAndView.addObject("studentsInformation", userInformationRepository.findAllByUser_Role(Role.STUDENT));
+        modelAndView.addObject("teachersInformation", userInformationRepository.findAllByUser_Role(Role.TEACHER));
         modelAndView.addObject("examsSubjectsTypes" , subjectService.getAllExamsSubjectTypesFromServer());
         return modelAndView;
     }

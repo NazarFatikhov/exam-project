@@ -6,7 +6,10 @@
 package ru.nazarfatichov.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.models.UserInformation;
+
+import java.util.List;
 
 /**
  *
@@ -14,4 +17,6 @@ import ru.nazarfatichov.models.UserInformation;
  */
 public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {
     UserInformation findFirstByUser_Id(Long id);
+
+    List<UserInformation> findAllByUser_Role(Role role);
 }

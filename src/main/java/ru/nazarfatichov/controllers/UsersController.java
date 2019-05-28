@@ -6,7 +6,9 @@
 package ru.nazarfatichov.controllers;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.nazarfatichov.models.ExamsSubjectsType;
+import ru.nazarfatichov.models.StudentExamTypeTask;
 import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.models.UserInformation;
+import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
+import ru.nazarfatichov.repositories.StudentExamTypeTaskRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
@@ -37,6 +43,12 @@ public class UsersController {
 
     @Autowired
     private UserInformationRepository userInformationRepository;
+
+    @Autowired
+    private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
+
+    @Autowired
+    private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
     
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ModelAndView getUsers(Principal principal){

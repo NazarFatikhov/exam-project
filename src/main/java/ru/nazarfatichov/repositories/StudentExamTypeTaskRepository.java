@@ -11,6 +11,8 @@ import java.util.List;
 public interface StudentExamTypeTaskRepository extends JpaRepository<StudentExamTypeTask, Long> {
     StudentExamTypeTask findFirstByStudent_IdAndExamsTypeTask_Id(Long userId, Long examsTypeTaskId);
 
+    List<StudentExamTypeTask> findAllByStudent_IdAndExamsTypeTask_ExamsSubjectsType_Id(Long studentId, Long examsTypeTaskId);
+
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "UPDATE student_exam_type_task SET " +

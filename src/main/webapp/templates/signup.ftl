@@ -4,6 +4,13 @@
     <div class="form-style-2-heading">
         Please sign up
     </div>
+    <#if errors??>
+    <#list errors as error>
+    <div class="alert-danger">
+        ${error.getDefaultMessage()}
+    </div>
+    </#list>
+    </#if>
     <form method="post" action="/signup">
         <label for="email">Email
             <input class="input-field" type="text" id="login" name="email">

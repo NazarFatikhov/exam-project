@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExamsSubjectsTypesForm {
+
     private String type;
     private String minScore;
     private String maxScore;

@@ -5,15 +5,22 @@
  */
 package ru.nazarfatichov.controllers;
 
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.forms.SignUpForm;
 import ru.nazarfatichov.forms.UserForm;
 import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.SignUpService;
+
+import javax.validation.Valid;
 
 /**
  *
@@ -31,8 +38,14 @@ public class SignUpController {
     }
     
     @RequestMapping(path = "/signup", method = RequestMethod.POST)
-    public String addUser(SignUpForm userForm) {
-        signUpService.signUp(userForm);
+        public String addUser(@Valid SignUpForm signUpForm,
+                          BindingResult result,
+                          ModelMap modelMap) {
+        if(result.hasErrors()){
+            modelMap.addAttribute("errors", result.getAllErrors());
+            return "signup";
+        }
+        signUpService.signUp(signUpForm);
         return "redirect:/signin";
     }
     

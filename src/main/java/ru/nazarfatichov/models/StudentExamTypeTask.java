@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GeneratorType;
-import ru.nazarfatichov.MyAnnotation;
 
 import javax.persistence.*;
 
-@MyAnnotation
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

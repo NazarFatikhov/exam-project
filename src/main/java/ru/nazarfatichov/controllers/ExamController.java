@@ -2,6 +2,7 @@ package ru.nazarfatichov.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import ru.nazarfatichov.services.StudentService;
 import ru.nazarfatichov.services.SubjectService;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.*;
 
@@ -42,9 +44,9 @@ public class ExamController {
     @Autowired
     private UserInformationRepository userInformationRepository;
 
-    @RequestMapping(path = "/teacher/exam/{exams-subjects-type-id}", method = RequestMethod.GET)
-    public ModelAndView showExamPage(@PathVariable("exams-subjects-type-id") Long examsSubjectTypeId){
-        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examsSubjectTypeId);
+    @RequestMapping(path = "/teacher/exam/new", method = RequestMethod.GET)
+    public ModelAndView showExamPage(){
+        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(Long.valueOf(3));//Change to really view
         ModelAndView modelAndView = new ModelAndView("exam");
         modelAndView.addObject("taskCount", examsSubjectsType.getTasksCount());
         modelAndView.addObject("studentsInformation", userInformationRepository.findAllByUser_Role(Role.STUDENT));
@@ -53,15 +55,18 @@ public class ExamController {
         return modelAndView;
     }
 
-    @RequestMapping(path = "/teacher/exam/3", method = RequestMethod.POST)
-    public String addExam(ExamForm examForm){
+    @RequestMapping(path = "/teacher/exam/new", method = RequestMethod.POST)
+    public String addExam(@Valid ExamForm examForm, BindingResult result){
         try {
+            if(result.hasErrors()){
+                return "redirect:/teacher/exam/new?error";
+            }
             examService.addExam(examForm);
         } catch (IncorrectSumOfTasksException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return "redirect:/teacher/exam/3";
+        return "redirect:/teacher/exam/new?success";
     }
 }

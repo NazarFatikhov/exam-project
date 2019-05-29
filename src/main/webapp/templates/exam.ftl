@@ -5,7 +5,17 @@
         Add Exam
     </div>
     <div class="form-style-2">
-        <form method="post" action="/teacher/exam/3">
+        <#if error??>
+            <p class="alert-danger">
+                Exam successfully added
+            </p>
+        </#if>
+        <#if success??>
+            <p class="alert-success">
+                Exam successfully added
+            </p>
+        </#if>
+        <form method="post" action="/teacher/exam/new">
             <label for="type">Type
                 <select class="custom-select" name="typeId" id="type">
                     <option selected>Choose type</option>

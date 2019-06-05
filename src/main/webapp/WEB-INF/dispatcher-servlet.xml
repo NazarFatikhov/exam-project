@@ -23,9 +23,10 @@
         <property name="suffix" value=".ftl"/>
     </bean>
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-        
+
     <mvc:annotation-driven/>
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
     <mvc:resources mapping="/images/**" location="/images/"/>
+
 </beans>

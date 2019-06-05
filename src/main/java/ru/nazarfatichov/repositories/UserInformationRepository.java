@@ -18,5 +18,6 @@ import java.util.List;
 public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {
     UserInformation findFirstByUser_Id(Long id);
 
+    List<UserInformation> findAllByNameStartingWithAAndUser_Role(String string, Role userRole);
     List<UserInformation> findAllByUser_Role(Role role);
 }

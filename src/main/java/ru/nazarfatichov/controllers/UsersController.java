@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.models.StudentExamTypeTask;
 import ru.nazarfatichov.models.User;
@@ -27,6 +30,8 @@ import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
 import ru.nazarfatichov.transfer.UserDTO;
 import ru.nazarfatichov.transfer.UserWithSubjectsDTO;
+
+import javax.json.Json;
 
 /**
  *
@@ -62,5 +67,11 @@ public class UsersController {
                 .build();
         modelAndView.addObject("userDTO", userWithSubjectsDTO);
         return modelAndView;
+    }
+
+    @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.POST)
+    @ResponseBody
+    public List<UserInformation> getStudentList(@RequestParam(name = "startString") String startString){
+        return userInformationRepository.findAllByNameStartingWithAAndUser_Role(startString, Role.STUDENT);
     }
 }

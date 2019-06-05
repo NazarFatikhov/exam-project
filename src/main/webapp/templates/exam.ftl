@@ -4,21 +4,25 @@
     <div class="form-style-2-heading">
         Add Exam
     </div>
-    <div class="form-style-2">
-        <#if error??>
+    <div class="form-style-2-heading" id="test">
+
+    </div>
+    <#if errors??>
+        <#list errors as error>
             <p class="alert-danger">
-                Exam successfully added
+                ${error.getDefaultMessage()}
             </p>
-        </#if>
-        <#if success??>
-            <p class="alert-success">
+        </#list>
+    </#if>
+    <#if success??>
+        <p class="alert-success">
                 Exam successfully added
-            </p>
-        </#if>
+        </p>
+    </#if>
+    <div class="form-style-2">
         <form method="post" action="/teacher/exam/new">
             <label for="type">Type
                 <select class="custom-select" name="typeId" id="type">
-                    <option selected>Choose type</option>
                 <#list examsSubjectsTypes as type>
                     <option value="${type.getId()}">${type.toString()}</option>
                 </#list>
@@ -28,7 +32,6 @@
 
             <label for="student">Student
                 <select class="custom-select" name="studentId" id="student">
-                    <option selected>Choose student</option>
                 <#list studentsInformation as studentInformation>
                     <option value="${studentInformation.getUser().getId()}">${studentInformation.toString()}</option>
                 </#list>
@@ -36,9 +39,8 @@
             </label>
             <br>
 
-            <label for="teacher">Student
+            <label for="teacher">Teacher
                 <select class="custom-select" name="teacherId" id="teacher">
-                    <option selected>Choose teacher</option>
                 <#list teachersInformation as teacherInformation>
                     <option value="${teacherInformation.getUser().getId()}">${teacherInformation.toString()}</option>
                 </#list>

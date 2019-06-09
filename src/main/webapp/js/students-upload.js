@@ -3,11 +3,11 @@ $(document).ready(function () {
         $("div[id='select-student']").removeClass('d-none')
         $("div[id='select-student']").empty()
         var startStr = this.value
-        sendRequest(startStr);
+        sendStudentRequest(startStr);
     })
-    updateList()
+    updateStudentList()
 })
-function sendRequest(startStr) {
+function sendStudentRequest(startStr) {
     $.ajax({
         type: "POST",
         url: "/teacher/exam/get-students",
@@ -25,7 +25,7 @@ function sendRequest(startStr) {
                         text: result[i].name + " " + result[i].surname
                     }));
             }
-            updateList()
+            updateStudentList()
         },
         error: function (response) {
             $("div[id='select-student']").append($('<button>',
@@ -37,8 +37,8 @@ function sendRequest(startStr) {
         }
     });
 }
-function updateList() {
-    $("button[class='btn btn-light btn-sm col-12 text-left student-select-button']").each(function () {
+function updateStudentList() {
+    $("button.student-select-button").each(function () {
         $(this).click((function (event) {
             $("input[id='find-student']").val(this.innerText)
             $("div[id='select-student']").addClass('d-none')

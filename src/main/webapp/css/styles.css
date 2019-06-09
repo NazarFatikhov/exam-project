@@ -88,3 +88,13 @@
     background: #EA7B00;
     color: #fff;
 }
+
+.checkbox.inline.indent,
+.checkbox.inline.indent+.checkbox.inline.no_indent {
+    margin-left: 0;
+    margin-right: 10px;
+    min-width: 40px !important;
+}
+.checkbox.inline.indent:last-child {
+    margin-right: 0;
+}

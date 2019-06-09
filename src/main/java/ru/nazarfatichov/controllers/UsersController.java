@@ -72,6 +72,12 @@ public class UsersController {
     @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.POST)
     @ResponseBody
     public List<UserInformation> getStudentList(@RequestParam(name = "startString") String startString){
-        return userInformationRepository.findAllByNameStartingWithAAndUser_Role(startString, Role.STUDENT);
+        return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.STUDENT);
+    }
+
+    @RequestMapping(path = "/teacher/exam/get-teachers", method = RequestMethod.POST)
+    @ResponseBody
+    public List<UserInformation> getTeacherList(@RequestParam(name = "startString") String startString){
+        return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.TEACHER);
     }
 }

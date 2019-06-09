@@ -15,11 +15,13 @@ import java.util.Map;
 
 @Data
 public class ExamForm {
-    private Long studentId;
+    @NotEmpty
+    private String student;
     private Long typeId;
     @NotEmpty
     private String date;
-    private Long teacherId;
+    @NotEmpty
+    private String teacher;
     @TasksConstraint
     private Integer[] scores;
 }

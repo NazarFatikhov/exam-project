@@ -44,4 +44,6 @@ public class ExamsSubjectsTypeController {
         subjectService.addExamsSubjectsType(examsSubjectsTypesForm);
         return "redirect:/admin/exams-subjects-type";
     }
+
+
 }

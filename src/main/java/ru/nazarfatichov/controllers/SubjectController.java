@@ -35,5 +35,4 @@ public class SubjectController {
         subjectService.addSubject(subjectForm);
         return "redirect:/admin/subjects";
     }
-    
 }

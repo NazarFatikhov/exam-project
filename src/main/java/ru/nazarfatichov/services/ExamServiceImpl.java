@@ -5,6 +5,7 @@ import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.ExamForm;
 import ru.nazarfatichov.forms.ExamTypeTaskForm;
@@ -43,10 +44,21 @@ public class ExamServiceImpl implements ExamService{
     @Autowired
     private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
 
+    @Autowired
+    private UserInformationRepository userInformationRepository;
+
     @Override
     public void addExam(ExamForm examForm) throws IncorrectSumOfTasksException, ParseException {
-        User student = usersRepository.findOne(examForm.getStudentId());
-        User teacher = usersRepository.findOne(examForm.getTeacherId());
+        String studentName = getUserName(examForm.getStudent());
+        String studentSurname = getUserSurname(examForm.getStudent());
+        String teacherName = getUserName(examForm.getTeacher());
+        String teacherSurname = getUserSurname(examForm.getTeacher());
+        UserInformation studentInformation =
+                userInformationRepository.findFirstByNameAndSurnameAndUser_Role(studentName, studentSurname, Role.STUDENT);
+        UserInformation teacherInformation =
+                userInformationRepository.findFirstByNameAndSurnameAndUser_Role(teacherName, teacherSurname, Role.TEACHER);
+        User student = usersRepository.findOne(studentInformation.getUser().getId());
+        User teacher = usersRepository.findOne(teacherInformation.getUser().getId());
         ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examForm.getTypeId());
         Date date = parseDate(examForm);
         Integer[] scores = examForm.getScores();
@@ -151,5 +163,13 @@ public class ExamServiceImpl implements ExamService{
                 }
         }
 
+    }
+
+    private String getUserName(String string){
+        return string.substring(0, string.indexOf(" "));
+    }
+
+    private String getUserSurname(String string){
+        return string.substring(string.indexOf(" ") + 1, string.length());
     }
 }

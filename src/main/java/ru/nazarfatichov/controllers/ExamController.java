@@ -45,22 +45,20 @@ public class ExamController {
     @Autowired
     private UserInformationRepository userInformationRepository;
 
-    @RequestMapping(path = "/teacher/exam/new", method = RequestMethod.GET)
-    public String showExamPage(ModelMap modelMap){
-        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(Long.valueOf(3));//Change to really view
-        modelMap.addAttribute("taskCount", examsSubjectsType.getTasksCount());
-        modelMap.addAttribute("studentsInformation", userInformationRepository.findAllByUser_Role(Role.STUDENT));
-        modelMap.addAttribute("teachersInformation", userInformationRepository.findAllByUser_Role(Role.TEACHER));
-        modelMap.addAttribute("examsSubjectsTypes" , subjectService.getAllExamsSubjectTypesFromServer());
-        return "exam";
+    @RequestMapping(path = "/teacher/exam/new-exam", method = RequestMethod.GET)
+    public String showNewExamPage(ModelMap modelMap){
+        modelMap.addAttribute("studentInformations", userInformationRepository.findAllByUser_Role(Role.STUDENT));
+        modelMap.addAttribute("teacherInformations", userInformationRepository.findAllByUser_Role(Role.TEACHER));
+        modelMap.addAttribute("examsSubjectsTypes", examsSubjectsTypeRepository.findAll());
+        return "new-exam";
     }
 
-    @RequestMapping(path = "/teacher/exam/new", method = RequestMethod.POST)
-    public String addExam(@Valid ExamForm examForm, BindingResult result, ModelMap modelMap){
+    @RequestMapping(path = "/teacher/exam/new-exam", method = RequestMethod.POST)
+    public String saveNewExam(ModelMap modelMap, @Valid ExamForm examForm, BindingResult result){
         try {
             if(result.hasErrors()){
                 modelMap.addAttribute("errors", result.getAllErrors());
-                return showExamPage(modelMap);
+                return showNewExamPage(modelMap);
             }
             examService.addExam(examForm);
         } catch (IncorrectSumOfTasksException e) {
@@ -68,14 +66,7 @@ public class ExamController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return "redirect:/teacher/exam/new?success";
-    }
-
-    @RequestMapping(path = "/teacher/exam/new-exam", method = RequestMethod.GET)
-    public String showNewExamPage(ModelMap modelMap){
-        modelMap.addAttribute("studentInformations", userInformationRepository.findAllByUser_Role(Role.STUDENT));
-        modelMap.addAttribute("teacherInformations", userInformationRepository.findAllByUser_Role(Role.TEACHER));
-        return "new-exam";
+        return "redirect:/teacher/exam/new-exam";
     }
 
 

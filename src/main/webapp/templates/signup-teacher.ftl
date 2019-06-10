@@ -1,5 +1,8 @@
 <#import "macros/main.ftl" as main>
+<#import "macros/main-headers.ftl" as mainHeaders>
 <@main.cover>
+<@mainHeaders.cover/>
+<body>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Create teacher
@@ -24,4 +27,5 @@
         <input type="submit" value="Sign Up Teacher">
     </form>
 </div>
+</body>
 </@main.cover>

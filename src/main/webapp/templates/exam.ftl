@@ -1,5 +1,8 @@
 <#import "macros/main.ftl" as main>
+<#import "macros/main-headers.ftl" as mainHeaders>
 <@main.cover>
+<@mainHeaders.cover/>
+<body>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Add Exam
@@ -61,4 +64,5 @@
         </form>
     </div>
 </div>
+</body>
 </@main.cover>

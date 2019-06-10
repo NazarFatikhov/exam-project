@@ -1,5 +1,8 @@
 <#import "macros/main.ftl" as main>
+<#import "macros/profile-headers.ftl" as profileHeaders>
 <@main.cover>
+<@profileHeaders.cover/>
+<body>
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -79,5 +82,5 @@
         </div>
     </div>
 </div>
-</div>
+</body>
 </@main.cover>

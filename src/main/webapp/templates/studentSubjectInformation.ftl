@@ -1,5 +1,8 @@
 <#import "macros/main.ftl" as main>
+<#import "macros/main-headers.ftl" as mainHeaders>
 <@main.cover>
+<@mainHeaders.cover/>
+<body>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Add student's subject's information
@@ -8,8 +11,8 @@
         <label for="student">Student
             <select class="custom-select" name="student" id="student">
                 <option selected>choose student</option>
-                <#list studentSubjectInformationDTO.getStudents() as student>
-                    <option value="${student.getId()}">${student.getUserInformation().getSurname()} ${student.getUserInformation().getSurname()}</option>
+                <#list students as student>
+                    <option value="${student.getId()}">${student.getId()}</option>
                 </#list>
             </select>
         </label>
@@ -17,8 +20,8 @@
         <label for="examsSubjectsType">Type
             <select class="custom-select" name="examsSubjectsType" id="examsSubjectsType">
                 <option selected>choose type and subject</option>
-                <#list studentSubjectInformationDTO.getExamsSubjectsTypes() as subjectsWithType>
-                    <option value="${subjectsWithType.getId()}">${subjectsWithType.getSubject().getName()} ${subjectsWithType.getType()}</option>
+                <#list examsSubjectsTypes as subjectsWithType>
+                    <option value="${subjectsWithType.getId()}">${subjectsWithType.getSubject().getName()}</option>
                 </#list>
             </select>
         </label>
@@ -43,4 +46,5 @@
         <br>
     </form>
 </div>
+</body>
 </@main.cover>

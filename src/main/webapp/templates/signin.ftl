@@ -19,6 +19,7 @@
         </label>
         <br>
         <input class= "bg-primary" type="submit" value="Login">
+        <a role="button" class="btn btn-secondary" href="/signup">Sign Up</a>
     </form>
 </div>
 </div>

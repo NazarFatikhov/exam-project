@@ -66,6 +66,7 @@ public class UsersController {
                 .studentSubjectInformation(studentService.getStudentSubjectInformation(user.get().getId()))
                 .build();
         modelAndView.addObject("userDTO", userWithSubjectsDTO);
+        modelAndView.addObject("isTeacher", user.get().getRole().equals(Role.TEACHER));
         return modelAndView;
     }
 

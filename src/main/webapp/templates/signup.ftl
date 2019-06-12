@@ -34,6 +34,7 @@
         </label>
         <br>
         <input class="bg-primary" type="submit" value="SignUp">
+        <a role="button" class="btn btn-secondary" href="/signin">Sign In</a>
     </form>
 </div>
 </@cardContainer.cover>

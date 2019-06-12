@@ -72,6 +72,9 @@
         </div>
     </div>
 </div>
+<#if isTeacher??>
+    <a role="button" class="btn btn-primary" href="/teacher/exam/new-exam">Add new Exam</a>
+</#if>
 </@cardContainer.cover>
 </body>
 </@main.cover>

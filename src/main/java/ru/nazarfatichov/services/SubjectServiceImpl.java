@@ -8,14 +8,13 @@ package ru.nazarfatichov.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.enums.SubjectState;
 import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
 import ru.nazarfatichov.forms.SubjectForm;
-import ru.nazarfatichov.models.ExamsSubjectsType;
-import ru.nazarfatichov.models.Subject;
-import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
-import ru.nazarfatichov.repositories.SubjectRepository;
+import ru.nazarfatichov.models.*;
+import ru.nazarfatichov.repositories.*;
 
 /**
  *
@@ -29,6 +28,15 @@ public class SubjectServiceImpl implements SubjectService{
 
     @Autowired
     private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
+
+    @Autowired
+    private StudentSubjectInformationRepository studentSubjectInformationRepository;
+
+    @Autowired
+    private ExamsTypeTaskRepository examsTypeTaskRepository;
     
     @Override
     public void addSubject(SubjectForm subjectForm) {
@@ -54,10 +62,22 @@ public class SubjectServiceImpl implements SubjectService{
                 .minScore(Integer.parseInt(examsSubjectsTypesForm.getMinScore()))
                 .subject(subject)
                 .type(Type.valueOf(examsSubjectsTypesForm.getType()))
-                .tasksCount(Integer.parseInt(examsSubjectsTypesForm.getTaskCount()))
+                .tasksCount(examsSubjectsTypesForm.getTaskCount().equals("") ? null : Integer.parseInt(examsSubjectsTypesForm.getTaskCount()))
                 .build();
 
-        examsSubjectsTypeRepository.save(examsSubjectsType);
+        List<User> students = usersRepository.findAllByRole(Role.STUDENT);
+
+        examsSubjectsType = examsSubjectsTypeRepository.save(examsSubjectsType);
+
+        for(User student : students) {
+            StudentSubjectInformation studentSubjectInformation = StudentSubjectInformation.builder()
+                    .examsSubjectsType(examsSubjectsType)
+                    .user(student)
+                    .examCount(0)
+                    .testCount(0)
+                    .build();
+            studentSubjectInformationRepository.save(studentSubjectInformation);
+        }
     }
 
     public List<ExamsSubjectsType> getAllExamsSubjectTypesFromServer(){

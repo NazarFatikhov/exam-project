@@ -3,6 +3,10 @@ package ru.nazarfatichov.services;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.ExamForm;
 import ru.nazarfatichov.forms.ExamTypeTaskForm;
+import ru.nazarfatichov.forms.TestForm;
+import ru.nazarfatichov.models.Exam;
+import ru.nazarfatichov.models.ExamsTypeTask;
+import ru.nazarfatichov.models.User;
 
 import java.text.ParseException;
 
@@ -10,5 +14,11 @@ public interface ExamService {
 
     void addExam(ExamForm examForm) throws IncorrectSumOfTasksException, ParseException;
 
-    void addExamsTypeTask(ExamTypeTaskForm examTypeTaskForm);
+    ExamsTypeTask addExamsTypeTask(ExamTypeTaskForm examTypeTaskForm);
+
+    void saveExam(Exam exam) throws IncorrectSumOfTasksException;
+
+    void saveExamTasks(Exam exam, Integer[] scores);
+
+    void addTest(TestForm testForm, User teacher) throws ParseException, IncorrectSumOfTasksException;
 }

@@ -7,10 +7,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.forms.ExamTypeTaskForm;
 import ru.nazarfatichov.models.ExamsTypeTask;
+import ru.nazarfatichov.models.StudentExamTypeTask;
+import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.ExamsTypeTaskRepository;
+import ru.nazarfatichov.repositories.StudentExamTypeTaskRepository;
+import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.ExamService;
 
 import javax.jws.WebParam;
@@ -28,6 +33,12 @@ public class ExamTypeTaskController {
     @Autowired
     private ExamService examService;
 
+    @Autowired
+    private UsersRepository usersRepository;
+
+    @Autowired
+    private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
+
     @RequestMapping(path = "/admin/exam-type-task", method = RequestMethod.GET)
     public ModelAndView showExamTypeTaskPage(){
         ModelAndView modelAndView = new ModelAndView("exam-type-task");
@@ -38,7 +49,16 @@ public class ExamTypeTaskController {
 
     @RequestMapping(path = "/admin/exam-type-task", method = RequestMethod.POST)
     public String addExamTypeTask(ExamTypeTaskForm examTypeTaskForm){
-        examService.addExamsTypeTask(examTypeTaskForm);
+        ExamsTypeTask examsTypeTask = examService.addExamsTypeTask(examTypeTaskForm);
+        for(User user : usersRepository.findAllByRole(Role.STUDENT)){
+            StudentExamTypeTask studentExamTypeTask = StudentExamTypeTask.builder()
+                    .total(0)
+                    .totalRight(0)
+                    .student(user)
+                    .examsTypeTask(examsTypeTask)
+                    .build();
+            studentExamTypeTaskRepository.save(studentExamTypeTask);
+        }
         return "redirect:/admin/exam-type-task";
     }
 

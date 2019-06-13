@@ -62,7 +62,8 @@
                 <td>${examSubjectType.getType()}</td>
                 <td>${examSubjectType.getMinScore()}</td>
                 <td>${examSubjectType.getMaxScore()}</td>
-                <td>${examSubjectType.getTasksCount()}</td>
+                <td><#if examSubjectType.getTasksCount()??>${examSubjectType.getTasksCount()}</#if></td>
+
             </tr>
             </#list>
             </tbody>

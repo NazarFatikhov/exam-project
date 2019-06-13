@@ -7,7 +7,7 @@
     <div class="form-style-2-heading">
         Create teacher
     </div>
-    <form method="post" action="/signup-teacher">
+    <form method="post" action="/admin/signup-teacher">
         <label for="email">Email
             <input class="input-field" type="text" id="login" name="email">
         </label>

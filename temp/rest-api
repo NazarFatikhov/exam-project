@@ -1,0 +1,5 @@
+GET api/exam - return list of all exams
+GET api/exam/{id} - return exam with id = {id}
+POST api/exam - create new exam, return created exam
+PUT api/exam/{id} - change exam with id = {id}, return changed exam
+DELETE api/exam/{id} - delete exam with id = {id}, return

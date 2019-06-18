@@ -13,16 +13,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.enums.Role;
-import ru.nazarfatichov.models.ExamsSubjectsType;
-import ru.nazarfatichov.models.StudentExamTypeTask;
-import ru.nazarfatichov.models.User;
-import ru.nazarfatichov.models.UserInformation;
+import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.StudentExamTypeTaskRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
@@ -81,4 +75,11 @@ public class UsersController {
     public List<UserInformation> getTeacherList(@RequestParam(name = "startString") String startString){
         return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.TEACHER);
     }
+
+    @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserInformation> getStudentList2(){
+        return userInformationRepository.findAll();
+    }
+
 }

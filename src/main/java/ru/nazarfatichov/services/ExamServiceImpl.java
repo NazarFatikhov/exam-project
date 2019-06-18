@@ -9,6 +9,7 @@ import ru.nazarfatichov.forms.ExamTypeTaskForm;
 import ru.nazarfatichov.forms.TestForm;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
+import ru.nazarfatichov.transfer.ExamDTO;
 
 import java.text.ParseException;
 import java.util.*;
@@ -44,7 +45,7 @@ public class ExamServiceImpl implements ExamService{
     private UserMemberParser userMemberParser;
 
     @Override
-    public void addExam(ExamForm examForm) throws IncorrectSumOfTasksException, ParseException {
+    public Exam addExam(ExamForm examForm) throws IncorrectSumOfTasksException, ParseException {
         String studentName = userMemberParser.getUserName(examForm.getStudent());
         String studentSurname = userMemberParser.getUserSurname(examForm.getStudent());
         String teacherName = userMemberParser.getUserName(examForm.getTeacher());
@@ -75,6 +76,8 @@ public class ExamServiceImpl implements ExamService{
         studentService.updateStudentSubjectInformation(student, examsSubjectsType, exam);
 
         studentService.updateStudentTypeTasks(student, exam, scores);
+
+        return exam;
     }
 
     @Override
@@ -133,6 +136,34 @@ public class ExamServiceImpl implements ExamService{
         saveExam(exam);
 
         studentService.updateStudentSubjectInformation(student, examsSubjectsType, exam);
+    }
+
+    @Override
+    public Exam addExam(ExamDTO examDTO) throws IncorrectSumOfTasksException, ParseException {
+        User student = usersRepository.findOne(examDTO.getStudentId());
+        User teacher = usersRepository.findOne(examDTO.getTeacherId());
+        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examDTO.getTypeId());
+        Date date = examMemberParser.parseDate(examDTO.getDate());
+        Integer[] scores = examDTO.getScores();
+        Integer totalScore = Arrays.stream(scores).mapToInt(Integer::intValue).sum();
+
+        Exam exam = Exam.builder()
+                .student(student)
+                .teacher(teacher)
+                .date(date)
+                .examsSubjectsType(examsSubjectsType)
+                .totalScore(totalScore)
+                .build();
+
+        saveExam(exam);
+
+        saveExamTasks(exam, scores);
+
+        studentService.updateStudentSubjectInformation(student, examsSubjectsType, exam);
+
+        studentService.updateStudentTypeTasks(student, exam, scores);
+
+        return exam;
     }
 
 }

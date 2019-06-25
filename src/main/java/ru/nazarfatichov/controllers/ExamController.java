@@ -47,8 +47,8 @@ public class ExamController {
 
     @RequestMapping(path = "/teacher/exam/new-exam", method = RequestMethod.GET)
     public String showNewExamPage(ModelMap modelMap){
-        modelMap.addAttribute("studentInformations", userInformationRepository.findAllByUser_Role(Role.STUDENT));
-        modelMap.addAttribute("teacherInformations", userInformationRepository.findAllByUser_Role(Role.TEACHER));
+        modelMap.addAttribute("studentInformations", userInformationRepository.findAllByUser_Role(Role.STUDENT).subList(0, 3));
+        modelMap.addAttribute("teacherInformations", userInformationRepository.findAllByUser_Role(Role.TEACHER).subList(0, 3));
         modelMap.addAttribute("examsSubjectsTypes", examsSubjectsTypeRepository.findAll());
         return "new-exam";
     }

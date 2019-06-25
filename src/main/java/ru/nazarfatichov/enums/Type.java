@@ -5,5 +5,5 @@ package ru.nazarfatichov.enums;
  * @author nazar
  */
 public enum Type {
-    EGE, OGE, TEST;
+    FINAL_EXAM, CONTROL_WORK, TEST;
 }

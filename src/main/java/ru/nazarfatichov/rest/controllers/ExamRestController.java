@@ -1,11 +1,13 @@
 package ru.nazarfatichov.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.ExamForm;
 import ru.nazarfatichov.models.Exam;
+import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.ExamRepository;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
@@ -19,6 +21,7 @@ import javax.persistence.EntityExistsException;
 import javax.swing.text.html.parser.Entity;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -40,7 +43,7 @@ public class ExamRestController {
     private UsersRepository usersRepository;
 
     @ResponseBody
-    @ExceptionHandler({IncorrectSumOfTasksException.class, ParseException.class})
+    @ExceptionHandler({IncorrectSumOfTasksException.class, ParseException.class, DataIntegrityViolationException.class})
     public ExceptionDTO handleException(Exception ex){
         return new ExceptionDTO(ex.getClass().getName(), ex.getMessage());
     }
@@ -71,17 +74,20 @@ public class ExamRestController {
     @ResponseBody
     public Exam changeExam(@PathVariable("id") Long examId, @RequestBody ExamDTO examDTO) throws ParseException {
         Exam oldExamCandidate = examRepository.findOne(examId);
-        if(oldExamCandidate == null){
+        User student = usersRepository.getOne(examDTO.getStudentId());
+        if(examRepository.findOne(examId) == null) {
             throw new IllegalArgumentException("Incorrect exam id");
         }
-        Exam changedExam = Exam.builder()
-                .id(oldExamCandidate.getId())
-                .date(examMemberParser.parseDate(examDTO.getDate()))
-                .examsSubjectsType(examsSubjectsTypeRepository.findOne(examDTO.getTypeId()))
-                .teacher(usersRepository.findOne(examDTO.getTeacherId()))
-                .student(usersRepository.findOne(examDTO.getStudentId()))
-                .totalScore(Arrays.stream(examDTO.getScores()).mapToInt(Integer::intValue).sum())
-                .build();
-        return changedExam;
+        Date date = examMemberParser.parseDate(examDTO.getDate());
+        Integer totalScore = Arrays.stream(examDTO.getScores()).mapToInt(Integer::intValue).sum();
+        examRepository.updateExam(examDTO.getStudentId(), examDTO.getTeacherId(),
+                examDTO.getTypeId(), date, totalScore, oldExamCandidate.getId());
+        return examRepository.findOne(examId);
+    }
+
+    @RequestMapping(path = "/api/exam/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteExam(@PathVariable("id") Long examId){
+        examRepository.delete(examId);
     }
 }

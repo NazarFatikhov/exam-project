@@ -57,7 +57,7 @@ public class SignUpController {
     @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.POST)
     public String addTeacher(SignUpForm userForm){
         signUpService.signUpteacher(userForm);
-        return "redirect:/signin";
+        return "redirect:/users";
     }
     
 }

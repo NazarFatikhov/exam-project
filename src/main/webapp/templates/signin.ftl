@@ -2,27 +2,19 @@
 <#import "macros/main-headers.ftl" as mainHeaders>
 <#import "macros/card-container.ftl" as cardContainer>
 <@main.cover>
-    <@mainHeaders.cover/>
+    <@mainHeaders.cover>
+        <link href="/css/signin.css" rel="stylesheet">
+    </@mainHeaders.cover>
 <body>
-<@cardContainer.cover>
-<div class="form-style-2">
-    <div class="form-style-2-heading text-center">
-        Please Login!
-    </div>
-    <form method="post" action="/signin">
-        <label for="emailAdress"><span class="col-3">Email</span>
-            <input class="input-field" type="text" id="login" name="emailAdress">
-        </label>
-        <br>
-        <label for="password"><span class="col-3">Password</span>
-            <input class="input-field" type="password" id="password" name="password">
-        </label>
-        <br>
-        <input class= "bg-primary" type="submit" value="Login">
-        <a role="button" class="btn btn-secondary" href="/signup">Sign Up</a>
-    </form>
-</div>
-</div>
-</@cardContainer.cover>
+<form method="post" class="form-signin" action="/signin">
+    <h1 class="h3 mb-3" id="main">Please sign in</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" name="emailAdress">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" name="password">
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in"/>
+    <div class="inner">
+        <p class="mt-5 mb-3 " style="color: black">&copy; 2019</p></div>
+</form>
 </body>
 </@main.cover>

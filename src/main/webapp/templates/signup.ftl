@@ -4,39 +4,48 @@
 <@main.cover>
     <@mainHeaders.cover/>
 <body>
-<@cardContainer.cover>
-<div class="form-style-2">
-    <div class="form-style-2-heading text-center">
-        Please sign up
-    </div>
-    <#if errors??>
-        <#list errors as error>
+        <#if errors??>
+            <#list errors as error>
     <div class="alert-danger">
         ${error.getDefaultMessage()}
     </div>
-        </#list>
-    </#if>
-    <form method="post" action="/signup">
-        <label for="email"><span class="col-3">Email</span>
-            <input class="input-field" type="text" id="login" name="email">
-        </label>
-        <br>
-        <label for="name"><span class="col-3">Name</span>
-            <input class="input-field" type="text" id="name" name="name">
-        </label>
-        <br>
-        <label for="surname"><span class="col-3">Surname</span>
-            <input class="input-field" type="text" id="surname" name="surname">
-        </label>
-        <br>
-        <label for="password"><span class="col-3">Password</span>
-            <input class="input-field" type="password" id="password" name="password">
-        </label>
-        <br>
-        <input class="bg-primary" type="submit" value="SignUp">
-        <a role="button" class="btn btn-secondary" href="/signin">Sign In</a>
-    </form>
-</div>
-</@cardContainer.cover>
+            </#list>
+        </#if>
+<div class="container">
+  <div class="py-5 text-left">
+
+      <h2>Sign up</h2>
+
+  </div>
+
+        <div class="row">
+
+            <div class="col-md-8 order-md-1">
+                <form class="needs-validation" novalidate method="post" action="/signup">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="" name="name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="" value="" name="surname"required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Password</label>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+                    </div>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">SIGN UP</button>
+                </form>
+            </div>
+        </div>
 </body>
 </@main.cover>

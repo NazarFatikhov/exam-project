@@ -8,7 +8,7 @@ $(document).ready(function () {
             url: "/teacher/subject-tasks",
             data: "subjectId=" + subjectId,
             success: function (result) {
-                if(result[0].examsSubjectsType.type == "OGE" || result[0].examsSubjectsType.type == "EGE"){
+                if(result[0].examsSubjectsType.type == "FINAL_EXAM" || result[0].examsSubjectsType.type == "CONTROL_WORK"){
                     $("div[id='subject-tasks-part-1']").append($('<h6>1 Part</h6>'))
                     $("div[id='subject-tasks-part-2']").append($('<h6>2 Part</h6>'))
                     $("div[id='subject-tasks-part-1']").removeClass("d-none")

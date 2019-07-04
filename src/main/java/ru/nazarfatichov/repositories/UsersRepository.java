@@ -11,6 +11,7 @@ import ru.nazarfatichov.models.User;
  * @author nazar
  */
 public interface UsersRepository extends JpaRepository<User, Long>{
+
     Optional<User> findOneByEmailAdress(String emailAdress);
     
     List<User> findAllByEmailAdress(String emailAdress);

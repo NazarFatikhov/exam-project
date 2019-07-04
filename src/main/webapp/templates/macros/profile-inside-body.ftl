@@ -2,7 +2,7 @@
 <div class="card-title mb-4">
     <div class="d-flex justify-content-start">
         <div class="image-container">
-            <img src="/images/avatar.jpg" id="imgProfile" style="width: 150px; height: 150px" сlass="img-thumbnail" />
+            <img src="/images/no-avatar.png" id="imgProfile" style="width: 150px; height: 150px" сlass="img-thumbnail" />
             <div class="middle">
                 <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
                 <input type="file" style="display: none;" id="profilePicture" name="file" />
@@ -68,5 +68,9 @@
 <#if isTeacher == true>
     <a role="button" class="btn btn-primary" href="/teacher/exam/new-exam">Add new Exam</a>
     <a role="button" class="btn btn-primary" href="/teacher/exam/new-test">Add new Test</a>
+</#if>
+<#if isAdmin == true>
+    <a role="button" class="btn btn-primary" href="/admin/subjects">Add new Subject</a>
+    <a role="button" class="btn btn-primary" href="/admin/signup-teacher">Add new Teacher</a>
 </#if>
 </#macro>

@@ -61,6 +61,7 @@ public class UsersController {
                 .build();
         modelAndView.addObject("userDTO", userWithSubjectsDTO);
         modelAndView.addObject("isTeacher", user.get().getRole().equals(Role.TEACHER));
+        modelAndView.addObject("isAdmin", user.get().getRole().equals(Role.ADMIN));
         return modelAndView;
     }
 

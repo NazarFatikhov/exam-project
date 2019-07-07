@@ -3,7 +3,6 @@ package ru.nazarfatichov.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nazarfatichov.enums.Type;
-import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
 import ru.nazarfatichov.services.mappers.ExamMapper;
@@ -96,8 +95,8 @@ public class RestExamServiceImpl implements RestExamService {
     }
 
     @Override
-    public Exam addNewExam(RestExamDto examDTO) throws IncorrectSumOfTasksException, ParseException {
-        return examService.addExam(examDTO);
+    public Exam addNewExam(RestExamDto examDTO) {
+        return null;
     }
 
     @Override

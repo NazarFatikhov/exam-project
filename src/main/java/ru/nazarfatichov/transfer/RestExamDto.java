@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,10 +13,11 @@ import java.util.List;
 @Builder
 public class RestExamDto {
 
+    private Long id;
     private RestUserDto student;
     private RestUserDto teacher;
     private RestExamSubjectTypeDto type;
-    private Date date;
+    private String date;
     private Integer totalScore;
     private List<RestExamTaskDto> tasks;
 

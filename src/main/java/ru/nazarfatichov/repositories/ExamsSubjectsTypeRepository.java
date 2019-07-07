@@ -5,15 +5,17 @@
  */
 package ru.nazarfatichov.repositories;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 
+import java.util.Optional;
+
 /**
- *
  * @author nazar
  */
-public interface ExamsSubjectsTypeRepository extends JpaRepository<ExamsSubjectsType, Long>{
+public interface ExamsSubjectsTypeRepository extends JpaRepository<ExamsSubjectsType, Long> {
+
+    Optional<ExamsSubjectsType> findFirstByTypeAndAndSubject_Name(Type type, String subjectName);
+
 }

@@ -3,6 +3,8 @@ package ru.nazarfatichov.services.mappers;
 import ru.nazarfatichov.models.Exam;
 import ru.nazarfatichov.models.ExamsTasks;
 import ru.nazarfatichov.models.UserInformation;
+import ru.nazarfatichov.services.ExamMemberParser;
+import ru.nazarfatichov.services.ExamMemberParserImpl;
 import ru.nazarfatichov.transfer.*;
 
 import java.util.ArrayList;
@@ -11,10 +13,11 @@ import java.util.List;
 public class ExamMapper {
 
     public RestExamDto getExamDto(Exam exam, UserInformation studentInformation,
-                                  UserInformation teacherInformation, List<ExamsTasks> examsTasks){
+                                  UserInformation teacherInformation, List<ExamsTasks> examsTasks) {
 
+        ExamMemberParser examMemberParser = new ExamMemberParserImpl();
         List<RestExamTaskDto> examTaskDtos = new ArrayList<>();
-        for(ExamsTasks examsTask : examsTasks){
+        for (ExamsTasks examsTask : examsTasks) {
             RestExamTypeTaskDto restExamTypeTaskDto = RestExamTypeTaskDto.builder()
                     .taskNumber(examsTask.getExamsTypeTask().getTasksNumber())
                     .minScore(examsTask.getExamsTypeTask().getMinScore())
@@ -50,7 +53,8 @@ public class ExamMapper {
                 .build();
 
         RestExamDto restExamDto = RestExamDto.builder()
-                .date(exam.getDate())
+                .id(exam.getId())
+                .date(examMemberParser.getString(exam.getDate()))
                 .student(studentDto)
                 .teacher(teacherDto)
                 .type(examSubjectTypeDto)

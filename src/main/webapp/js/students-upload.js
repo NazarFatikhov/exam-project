@@ -7,6 +7,7 @@ $(document).ready(function () {
     })
     updateStudentList()
 })
+
 function sendStudentRequest(startStr) {
     $.ajax({
         type: "POST",
@@ -37,6 +38,7 @@ function sendStudentRequest(startStr) {
         }
     });
 }
+
 function updateStudentList() {
     $("button.student-select-button").each(function () {
         $(this).click((function (event) {

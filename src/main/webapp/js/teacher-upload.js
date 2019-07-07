@@ -7,6 +7,7 @@ $(document).ready(function () {
     })
     updateTeacherList()
 })
+
 function sendTeacherRequest(startStr) {
     $.ajax({
         type: "POST",
@@ -37,6 +38,7 @@ function sendTeacherRequest(startStr) {
         }
     });
 }
+
 function updateTeacherList() {
     $("button.teacher-select-button").each(function () {
         $(this).click((function (event) {

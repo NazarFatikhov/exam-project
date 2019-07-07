@@ -11,9 +11,9 @@
         <@profileInsideBody.cover/>
     </@cardContainer.cover>
     <#else>
-    <@profileCardContainer.cover>
-        <@profileInsideBody.cover/>
-    </@profileCardContainer.cover>
+        <@profileCardContainer.cover>
+            <@profileInsideBody.cover/>
+        </@profileCardContainer.cover>
     </#if>
 </body>
 </@main.cover>

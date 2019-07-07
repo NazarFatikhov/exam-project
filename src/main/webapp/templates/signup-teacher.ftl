@@ -1,7 +1,7 @@
 <#import "macros/main.ftl" as main>
 <#import "macros/main-headers.ftl" as mainHeaders>
 <@main.cover>
-<@mainHeaders.cover/>
+    <@mainHeaders.cover/>
 <body>
 <body>
         <#if errors??>
@@ -25,11 +25,13 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" name="name" required>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" name="name"
+                               required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" name="surname"required>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" name="surname"
+                               required>
                     </div>
                 </div>
 
@@ -40,7 +42,8 @@
                 <div class="mb-3">
                     <label for="password">Password</label>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                           name="password" required>
                 </div>
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">SIGN UP</button>

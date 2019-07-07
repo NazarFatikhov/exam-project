@@ -1,7 +1,7 @@
 <#import "macros/main.ftl" as main>
 <#import "macros/main-headers.ftl" as mainHeaders>
 <@main.cover>
-<@mainHeaders.cover/>
+    <@mainHeaders.cover/>
 <body>
 <div class="form-style-2">
     <div class="form-style-2-heading">
@@ -19,7 +19,7 @@
     </#if>
     <#if success??>
         <p class="alert-success">
-                Exam successfully added
+            Exam successfully added
         </p>
     </#if>
     <div class="form-style-2">

@@ -14,7 +14,8 @@
                             <input class="form-control" type="text" id="find-student" name="student">
                             <div class="col-12" id="select-student" style="padding: 0">
                                                     <#list studentInformations as userInformation>
-                                                        <button type="button" class="btn btn-light btn-sm col-12 text-left student-select-button">${userInformation.getName()} ${userInformation.getSurname()}</button>
+                                                        <button type="button"
+                                                                class="btn btn-light btn-sm col-12 text-left student-select-button">${userInformation.getName()} ${userInformation.getSurname()}</button>
                                                     </#list>
                             </div>
                             <br>
@@ -22,7 +23,8 @@
                             <input class="form-control" type="text" id="find-teacher" name="teacher">
                             <div class="col-12" id="select-teacher" style="padding: 0">
                                                     <#list teacherInformations as userInformation>
-                                                        <button type="button" class="btn btn-light btn-sm col-12 text-left teacher-select-button">${userInformation.getName()} ${userInformation.getSurname()}</button>
+                                                        <button type="button"
+                                                                class="btn btn-light btn-sm col-12 text-left teacher-select-button">${userInformation.getName()} ${userInformation.getSurname()}</button>
                                                     </#list>
                             </div>
                             <br>
@@ -32,7 +34,7 @@
                                                         <#if type.getType().toString() != "TEST">
                                                         <option value="${type.getId()}">${type.toString()}</option>
                                                         </#if>
-                                                     </#list>
+                                                    </#list>
                             </select>
                             <br><br>
                             <h6>Date</h6>

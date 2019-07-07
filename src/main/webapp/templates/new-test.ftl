@@ -14,7 +14,8 @@
                             <input class="form-control" type="text" id="find-student" name="student">
                             <div class="col-12" id="select-student" style="padding: 0">
                                                     <#list studentInformations as userInformation>
-                                                        <button type="button" class="btn btn-light btn-sm col-12 text-left student-select-button">${userInformation.getName()} ${userInformation.getSurname()}</button>
+                                                        <button type="button"
+                                                                class="btn btn-light btn-sm col-12 text-left student-select-button">${userInformation.getName()} ${userInformation.getSurname()}</button>
                                                     </#list>
                             </div>
                             <br>
@@ -33,7 +34,8 @@
                             <h6>Score</h6>
                             <div class="input-group input-group-sm py-sm-1">
                                 <span class="input-group-text p-0">Score</span>
-                                <input type='text' class='form-control' aria-label='Text input with checkbox' name='score'>
+                                <input type='text' class='form-control' aria-label='Text input with checkbox'
+                                       name='score'>
                             </div>
                             <input type="submit" value="Save" class="bg-primary">
                         </form>

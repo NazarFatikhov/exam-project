@@ -5,7 +5,6 @@
  */
 package ru.nazarfatichov.services;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nazarfatichov.enums.Role;
@@ -13,15 +12,19 @@ import ru.nazarfatichov.enums.SubjectState;
 import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
 import ru.nazarfatichov.forms.SubjectForm;
-import ru.nazarfatichov.models.*;
+import ru.nazarfatichov.models.ExamsSubjectsType;
+import ru.nazarfatichov.models.StudentSubjectInformation;
+import ru.nazarfatichov.models.Subject;
+import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.*;
 
+import java.util.List;
+
 /**
- *
  * @author nazar
  */
 @Service
-public class SubjectServiceImpl implements SubjectService{
+public class SubjectServiceImpl implements SubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
@@ -37,15 +40,15 @@ public class SubjectServiceImpl implements SubjectService{
 
     @Autowired
     private ExamsTypeTaskRepository examsTypeTaskRepository;
-    
+
     @Override
     public void addSubject(SubjectForm subjectForm) {
-        
+
         Subject subject = Subject.builder()
                 .name(subjectForm.getName())
                 .state(SubjectState.ACTIVE)
                 .build();
-        
+
         subjectRepository.save(subject);
     }
 
@@ -69,7 +72,7 @@ public class SubjectServiceImpl implements SubjectService{
 
         examsSubjectsType = examsSubjectsTypeRepository.save(examsSubjectsType);
 
-        for(User student : students) {
+        for (User student : students) {
             StudentSubjectInformation studentSubjectInformation = StudentSubjectInformation.builder()
                     .examsSubjectsType(examsSubjectsType)
                     .user(student)
@@ -80,7 +83,7 @@ public class SubjectServiceImpl implements SubjectService{
         }
     }
 
-    public List<ExamsSubjectsType> getAllExamsSubjectTypesFromServer(){
+    public List<ExamsSubjectsType> getAllExamsSubjectTypesFromServer() {
         return examsSubjectsTypeRepository.findAll();
     }
 

@@ -6,7 +6,6 @@ import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
-import ru.nazarfatichov.transfer.UserDTO;
 
 import java.util.List;
 
@@ -62,18 +61,17 @@ public class StudentServiceImpl implements StudentService {
         StudentSubjectInformation studentSubjectInformation =
                 studentSubjectInformationRepository.findFirstByUser_IdAndExamsSubjectsType_Id(student.getId(), examsSubjectsType.getId());
         Integer examCount = studentSubjectInformation.getExamCount();
-        if(examCount == null){
+        if (examCount == null) {
             examCount = 1;
-        }
-        else{
+        } else {
             examCount += 1;
         }
         Integer lastExamScore = exam.getTotalScore();
         Float averageScore = studentSubjectInformation.getAverageExamScore();
-        if(averageScore == null){
+        if (averageScore == null) {
             averageScore = Float.valueOf(0);
         }
-        Float averageExamScore = (averageScore + lastExamScore)/examCount;
+        Float averageExamScore = (averageScore + lastExamScore) / examCount;
         studentSubjectInformationRepository.setStudentSubjectInformation(averageExamScore,
                 lastExamScore, examCount, student.getId(), examsSubjectsType.getId());
     }
@@ -81,20 +79,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void updateStudentTypeTasks(User student, Exam exam, Integer[] scores) {
         List<ExamsTypeTask> examsTypeTasks = examsTypeTaskRepository.findAllByExamsSubjectsType_Id(exam.getExamsSubjectsType().getId());
-        for(ExamsTypeTask e : examsTypeTasks){
+        for (ExamsTypeTask e : examsTypeTasks) {
             StudentExamTypeTask studentExamTypeTask
                     = studentExamTypeTaskRepository.findFirstByStudent_IdAndExamsTypeTask_Id(student.getId(), e.getId());
-            if(e.getMaxScore() == 1){
+            if (e.getMaxScore() == 1) {
                 Integer total = studentExamTypeTask.getTotal() + 1;
                 Integer totalRight = studentExamTypeTask.getTotalRight() + scores[e.getTasksNumber() - 1];
                 studentExamTypeTaskRepository.setStudentExamTaskTotalRightAndTotal(totalRight, total, e.getId(), student.getId());
-            }else {
+            } else {
                 Integer total = studentExamTypeTask.getTotal() + 1;
                 Float averageScore = studentExamTypeTask.getAverageScore();
-                if(averageScore == null){
+                if (averageScore == null) {
                     averageScore = Float.valueOf(0);
                 }
-                Float newAverageScore = (averageScore + scores[e.getTasksNumber()-1])/total;
+                Float newAverageScore = (averageScore + scores[e.getTasksNumber() - 1]) / total;
                 Integer score = scores[e.getTasksNumber() - 1];
                 studentExamTypeTaskRepository.setStudentExamTaskTotalAndScores(total,
                         score, newAverageScore, e.getId(), student.getId());

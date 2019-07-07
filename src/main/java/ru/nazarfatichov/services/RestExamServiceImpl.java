@@ -2,27 +2,19 @@ package ru.nazarfatichov.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
-import ru.nazarfatichov.models.Exam;
-import ru.nazarfatichov.models.ExamsTasks;
-import ru.nazarfatichov.models.User;
-import ru.nazarfatichov.models.UserInformation;
-import ru.nazarfatichov.repositories.ExamRepository;
-import ru.nazarfatichov.repositories.ExamsTasksRepository;
-import ru.nazarfatichov.repositories.UserInformationRepository;
-import ru.nazarfatichov.repositories.UsersRepository;
+import ru.nazarfatichov.models.*;
+import ru.nazarfatichov.repositories.*;
 import ru.nazarfatichov.services.mappers.ExamMapper;
-import ru.nazarfatichov.transfer.ExamDTO;
 import ru.nazarfatichov.transfer.RestExamDto;
-import ru.nazarfatichov.transfer.RestExamSubjectTypeDto;
-import ru.nazarfatichov.transfer.RestUserDto;
 
 import javax.persistence.EntityNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RestExamServiceImpl implements RestExamService {
@@ -34,7 +26,7 @@ public class RestExamServiceImpl implements RestExamService {
     private UsersRepository usersRepository;
 
     @Autowired
-    private ExamMemberParser examMemberParser;
+    private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
 
     @Autowired
     private ExamService examService;
@@ -45,11 +37,14 @@ public class RestExamServiceImpl implements RestExamService {
     @Autowired
     private ExamsTasksRepository examsTasksRepository;
 
+    @Autowired
+    private ExamMemberParser examMemberParser;
+
     @Override
-    public List<RestExamDto> getAllExamDtos () {
+    public List<RestExamDto> getAllExamDtos() {
         List<Exam> exams = examRepository.findAll();
         List<RestExamDto> restExamDtos = new ArrayList<>();
-        for(Exam exam : exams){
+        for (Exam exam : exams) {
             UserInformation teacherInformation = userInformationRepository.findFirstByUser_Id(exam.getTeacher().getId());
             UserInformation studentInformation = userInformationRepository.findFirstByUser_Id(exam.getStudent().getId());
             List<ExamsTasks> examsTasks = examsTasksRepository.findAllByExam_Id(exam.getId());
@@ -67,7 +62,7 @@ public class RestExamServiceImpl implements RestExamService {
         UserInformation teacherInformation = userInformationRepository.findFirstByUser_Id(exam.getTeacher().getId());
         UserInformation studentInformation = userInformationRepository.findFirstByUser_Id(exam.getStudent().getId());
         List<ExamsTasks> examsTasks = examsTasksRepository.findAllByExam_Id(exam.getId());
-        if(exam == null){
+        if (exam == null) {
             throw new IllegalArgumentException("Incorrect exam id");
         }
 
@@ -77,25 +72,31 @@ public class RestExamServiceImpl implements RestExamService {
     }
 
     @Override
-    public Exam updateExam(Long id, ExamDTO examDTO) throws ParseException {
-        Exam oldExamCandidate = examRepository.findOne(id);
-        User student = usersRepository.getOne(examDTO.getStudentId());
-        if(examRepository.findOne(id) == null) {
+    public RestExamDto updateExam(Long id, RestExamDto examDTO) throws ParseException {
+        Exam oldExam = examRepository.findOne(id);
+        Optional<User> studentCandidate = usersRepository.findOneByEmailAdress(examDTO.getStudent().getEmail());
+        Optional<User> teacherCandidate = usersRepository.findOneByEmailAdress(examDTO.getTeacher().getEmail());
+        Optional<ExamsSubjectsType> examsSubjectsTypeCandidate = examsSubjectsTypeRepository.findFirstByTypeAndAndSubject_Name(
+                Type.valueOf(examDTO.getType().getTypeName()), examDTO.getType().getSubjectName());
+        if (oldExam == null) {
             throw new EntityNotFoundException("exam");
-        } else if(usersRepository.getOne(examDTO.getStudentId()) == null){
+        } else if (!studentCandidate.isPresent()) {
             throw new EntityNotFoundException("student");
-        } else if(usersRepository.getOne(examDTO.getTeacherId()) == null){
+        } else if (!teacherCandidate.isPresent()) {
             throw new EntityNotFoundException("teacher");
+        } else if (!examsSubjectsTypeCandidate.isPresent()) {
+            throw new EntityNotFoundException("type");
         }
-        Date date = examMemberParser.parseDate(examDTO.getDate());
-        Integer totalScore = Arrays.stream(examDTO.getScores()).mapToInt(Integer::intValue).sum();
-        examRepository.updateExam(examDTO.getStudentId(), examDTO.getTeacherId(),
-                examDTO.getTypeId(), date, totalScore, oldExamCandidate.getId());
-        return examRepository.findOne(id);
+        Date date = examMemberParser.parseDateWithHours(examDTO.getDate());
+        examRepository.updateExam(studentCandidate.get().getId(), teacherCandidate.get().getId(),
+                examsSubjectsTypeCandidate.get().getId(), date, examDTO.getTotalScore(), oldExam.getId());
+        ExamMapper examMapper = new ExamMapper();
+        Exam newExam = examRepository.findOne(id);
+        return examMapper.getExamDto(newExam, userInformationRepository.findFirstByUser_Id(studentCandidate.get().getId()), userInformationRepository.findFirstByUser_Id(teacherCandidate.get().getId()), examsTasksRepository.findAllByExam_Id(newExam.getId()));
     }
 
     @Override
-    public Exam addNewExam(ExamDTO examDTO) throws IncorrectSumOfTasksException, ParseException {
+    public Exam addNewExam(RestExamDto examDTO) throws IncorrectSumOfTasksException, ParseException {
         return examService.addExam(examDTO);
     }
 

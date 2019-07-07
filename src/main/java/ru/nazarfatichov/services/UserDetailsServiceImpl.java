@@ -1,6 +1,5 @@
 package ru.nazarfatichov.services;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,25 +9,26 @@ import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.security.details.UserDetailsImpl;
 
+import java.util.Optional;
+
 /**
- *
  * @author nazar
  */
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UsersRepository newUserRepository;
-    
+
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
         Optional<User> userCandidate = newUserRepository.findOneByEmailAdress(string);
-        if(userCandidate.isPresent()){
+        if (userCandidate.isPresent()) {
             return new UserDetailsImpl((userCandidate.get()));
-        }else{
+        } else {
             throw new IllegalArgumentException("User not found");
         }
-       
+
     }
-    
+
 }

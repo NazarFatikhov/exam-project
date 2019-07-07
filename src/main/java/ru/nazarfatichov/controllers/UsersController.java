@@ -5,35 +5,33 @@
  */
 package ru.nazarfatichov.controllers;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ru.nazarfatichov.enums.Role;
-import ru.nazarfatichov.models.*;
+import ru.nazarfatichov.models.User;
+import ru.nazarfatichov.models.UserInformation;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.StudentExamTypeTaskRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
-import ru.nazarfatichov.transfer.UserDTO;
 import ru.nazarfatichov.transfer.UserWithSubjectsDTO;
 
-import javax.json.Json;
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 /**
- *
  * @author nazar
  */
 @Controller
 public class UsersController {
-    
+
     @Autowired
     private UsersRepository usersRepository;
 
@@ -48,9 +46,9 @@ public class UsersController {
 
     @Autowired
     private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
-    
+
     @RequestMapping(path = "/users", method = RequestMethod.GET)
-    public ModelAndView getUsers(Principal principal){
+    public ModelAndView getUsers(Principal principal) {
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
         UserInformation userInformation = userInformationRepository.findFirstByUser_Id(user.get().getId());
         ModelAndView modelAndView = new ModelAndView("users");
@@ -67,19 +65,19 @@ public class UsersController {
 
     @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.POST)
     @ResponseBody
-    public List<UserInformation> getStudentList(@RequestParam(name = "startString") String startString){
+    public List<UserInformation> getStudentList(@RequestParam(name = "startString") String startString) {
         return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.STUDENT);
     }
 
     @RequestMapping(path = "/teacher/exam/get-teachers", method = RequestMethod.POST)
     @ResponseBody
-    public List<UserInformation> getTeacherList(@RequestParam(name = "startString") String startString){
+    public List<UserInformation> getTeacherList(@RequestParam(name = "startString") String startString) {
         return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.TEACHER);
     }
 
     @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserInformation> getStudentList2(){
+    public List<UserInformation> getStudentList2() {
         return userInformationRepository.findAll();
     }
 

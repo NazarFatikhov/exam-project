@@ -10,18 +10,16 @@ import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- *
  * @author nazar
  */
 @Service
-public class SignUpServiceImpl implements SignUpService{
-    
+public class SignUpServiceImpl implements SignUpService {
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private UsersRepository userRepository;
     @Autowired
@@ -38,10 +36,10 @@ public class SignUpServiceImpl implements SignUpService{
 
     @Autowired
     private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
-    
+
     @Override
     public void signUp(SignUpForm signUpForm) {
-        
+
         String hashPassword = passwordEncoder.encode(signUpForm.getPassword());
 
         User user = User.builder()
@@ -90,9 +88,9 @@ public class SignUpServiceImpl implements SignUpService{
 
     }
 
-    private void initStudentSubjectInformation(User student){
+    private void initStudentSubjectInformation(User student) {
         List<ExamsSubjectsType> examsSubjectsTypes = examsSubjectsTypeRepository.findAll();
-        for(ExamsSubjectsType e : examsSubjectsTypes) {
+        for (ExamsSubjectsType e : examsSubjectsTypes) {
             StudentSubjectInformation studentSubjectInformation = StudentSubjectInformation.builder()
                     .user(student)
                     .examsSubjectsType(e)
@@ -101,11 +99,11 @@ public class SignUpServiceImpl implements SignUpService{
         }
     }
 
-    private void initStudentExamTypeTasks(User student){
+    private void initStudentExamTypeTasks(User student) {
         List<ExamsSubjectsType> examsSubjectsTypes = examsSubjectsTypeRepository.findAll();
-        for(ExamsSubjectsType type : examsSubjectsTypes){
+        for (ExamsSubjectsType type : examsSubjectsTypes) {
             List<ExamsTypeTask> examsTypeTasks = examsTypeTaskRepository.findAllByExamsSubjectsType_Id(type.getId());
-            for(ExamsTypeTask task : examsTypeTasks){
+            for (ExamsTypeTask task : examsTypeTasks) {
                 StudentExamTypeTask studentExamTypeTask = StudentExamTypeTask.builder()
                         .student(student)
                         .examsTypeTask(task)
@@ -116,5 +114,5 @@ public class SignUpServiceImpl implements SignUpService{
             }
         }
     }
-    
+
 }

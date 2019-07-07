@@ -12,13 +12,14 @@ import ru.nazarfatichov.models.UserInformation;
 import java.util.List;
 
 /**
- *
  * @author nazar
  */
 public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {
     UserInformation findFirstByUser_Id(Long id);
+
     UserInformation findFirstByNameAndSurnameAndUser_Role(String name, String surname, Role userRole);
 
     List<UserInformation> findAllByNameStartingWithAndUser_Role(String string, Role userRole);
+
     List<UserInformation> findAllByUser_Role(Role role);
 }

@@ -9,9 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.nazarfatichov.models.Subject;
 
 /**
- *
  * @author nazar
  */
-public interface SubjectRepository extends JpaRepository<Subject, Long>{
+public interface SubjectRepository extends JpaRepository<Subject, Long> {
     Subject findOneByName(String name);
 }

@@ -5,15 +5,14 @@
  */
 package ru.nazarfatichov.models;
 
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
 /**
- *
  * @author nazar
  */
 @Data
@@ -23,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user_information")
 public class UserInformation {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +30,7 @@ public class UserInformation {
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")
     private User user;
-    
+
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

@@ -14,24 +14,23 @@ import ru.nazarfatichov.forms.SubjectForm;
 import ru.nazarfatichov.services.SubjectService;
 
 /**
- *
  * @author nazar
  */
 @Controller
 public class SubjectController {
-    
+
     @Autowired
     private SubjectService subjectService;
-    
+
     @RequestMapping(path = "/admin/subjects", method = RequestMethod.GET)
-    public ModelAndView showAllSubjects(){
+    public ModelAndView showAllSubjects() {
         ModelAndView modelAndView = new ModelAndView("subjects");
         modelAndView.addObject("subjectsFromServer", subjectService.getAllSubjects());
         return modelAndView;
     }
-    
+
     @RequestMapping(path = "/admin/add-subject", method = RequestMethod.POST)
-    public String addSubject(SubjectForm subjectForm){
+    public String addSubject(SubjectForm subjectForm) {
         subjectService.addSubject(subjectForm);
         return "redirect:/admin/subjects";
     }

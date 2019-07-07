@@ -1,8 +1,10 @@
 package ru.nazarfatichov.services;
 
 import ru.nazarfatichov.forms.StudentSubjectInformationForm;
-import ru.nazarfatichov.models.*;
-import ru.nazarfatichov.transfer.UserDTO;
+import ru.nazarfatichov.models.Exam;
+import ru.nazarfatichov.models.ExamsSubjectsType;
+import ru.nazarfatichov.models.StudentSubjectInformation;
+import ru.nazarfatichov.models.User;
 
 import java.util.List;
 

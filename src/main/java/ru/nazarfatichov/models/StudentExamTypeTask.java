@@ -16,28 +16,28 @@ import javax.persistence.*;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"student_id", "exams_type_task_id"})})
 public class StudentExamTypeTask {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @ManyToOne(targetEntity = User.class)
-        @JoinColumn(name = "student_id", nullable = false)
-        private User student;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "student_id", nullable = false)
+    private User student;
 
-        @ManyToOne(targetEntity = ExamsTypeTask.class)
-        @JoinColumn(name = "exams_type_task_id", nullable = false)
-        private ExamsTypeTask examsTypeTask;
+    @ManyToOne(targetEntity = ExamsTypeTask.class)
+    @JoinColumn(name = "exams_type_task_id", nullable = false)
+    private ExamsTypeTask examsTypeTask;
 
-        private Integer total;
+    private Integer total;
 
-        @Column(name = "total_right")
-        private Integer totalRight;
+    @Column(name = "total_right")
+    private Integer totalRight;
 
-        @Column(name = "average_score")
-        private Float averageScore;
+    @Column(name = "average_score")
+    private Float averageScore;
 
-        @Column(name = "last_score")
-        private Integer lastScore;
+    @Column(name = "last_score")
+    private Integer lastScore;
 
 
 }

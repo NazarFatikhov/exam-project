@@ -11,9 +11,11 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy= TaskScoreValidator.class)
+@Constraint(validatedBy = TaskScoreValidator.class)
 public @interface TasksConstraint {
     String message() default "{value.negative}";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

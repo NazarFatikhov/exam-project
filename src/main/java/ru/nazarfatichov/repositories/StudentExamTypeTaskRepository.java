@@ -18,14 +18,14 @@ public interface StudentExamTypeTaskRepository extends JpaRepository<StudentExam
     @Query(nativeQuery = true, value = "UPDATE student_exam_type_task SET " +
             "total_right = ?, total = ? WHERE exams_type_task_id = ? AND student_id = ?;")
     void setStudentExamTaskTotalRightAndTotal(Integer totalRight,
-                                                 Integer total,
-                                                 Long examsTypeTaskId,
-                                                 Long userId);
+                                              Integer total,
+                                              Long examsTypeTaskId,
+                                              Long userId);
 
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "UPDATE student_exam_type_task SET " +
             "total = ?, last_score = ?, average_score = ? WHERE " +
             "exams_type_task_id = ? AND student_id = ?;")
-    void setStudentExamTaskTotalAndScores(Integer total, Integer lastScore, Float averageScore, Long examsTypeTaskId,    Long userId);
+    void setStudentExamTaskTotalAndScores(Integer total, Integer lastScore, Float averageScore, Long examsTypeTaskId, Long userId);
 }

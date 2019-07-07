@@ -7,17 +7,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 /**
- *
  * @author nazar
  */
 @Data
 public class SignUpForm {
-   @Email
-   private String email;
-   @Size(min = 3, message = "password should be more than 3 characters")
-   private String password;
-   @NotEmpty
-   private String name;
-   @NotEmpty
-   private String surname;
+    @Email
+    private String email;
+    @Size(min = 3, message = "password should be more than 3 characters")
+    private String password;
+    @NotEmpty
+    private String name;
+    @NotEmpty
+    private String surname;
 }

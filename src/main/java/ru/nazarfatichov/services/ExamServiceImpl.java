@@ -9,13 +9,14 @@ import ru.nazarfatichov.forms.ExamTypeTaskForm;
 import ru.nazarfatichov.forms.TestForm;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
-import ru.nazarfatichov.transfer.ExamDTO;
+import ru.nazarfatichov.transfer.RestExamDto;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
 
 @Service
-public class ExamServiceImpl implements ExamService{
+public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private ExamRepository examRepository;
@@ -93,9 +94,9 @@ public class ExamServiceImpl implements ExamService{
     }
 
     @Override
-    public void saveExam(Exam exam) throws IncorrectSumOfTasksException{
+    public void saveExam(Exam exam) throws IncorrectSumOfTasksException {
 
-        if(exam.getTotalScore() > exam.getExamsSubjectsType().getMaxScore() || exam.getTotalScore() < exam.getExamsSubjectsType().getMinScore()){
+        if (exam.getTotalScore() > exam.getExamsSubjectsType().getMaxScore() || exam.getTotalScore() < exam.getExamsSubjectsType().getMinScore()) {
             throw new IncorrectSumOfTasksException();
         }
 
@@ -103,7 +104,7 @@ public class ExamServiceImpl implements ExamService{
     }
 
     @Override
-    public void saveExamTasks(Exam exam, Integer[] scores){
+    public void saveExamTasks(Exam exam, Integer[] scores) {
         ExamsTasks examsTasks = null;
         for (int i = 0; i < scores.length; i++) {
             examsTasks = ExamsTasks.builder()
@@ -136,34 +137,6 @@ public class ExamServiceImpl implements ExamService{
         saveExam(exam);
 
         studentService.updateStudentSubjectInformation(student, examsSubjectsType, exam);
-    }
-
-    @Override
-    public Exam addExam(ExamDTO examDTO) throws IncorrectSumOfTasksException, ParseException {
-        User student = usersRepository.findOne(examDTO.getStudentId());
-        User teacher = usersRepository.findOne(examDTO.getTeacherId());
-        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examDTO.getTypeId());
-        Date date = examMemberParser.parseDate(examDTO.getDate());
-        Integer[] scores = examDTO.getScores();
-        Integer totalScore = Arrays.stream(scores).mapToInt(Integer::intValue).sum();
-
-        Exam exam = Exam.builder()
-                .student(student)
-                .teacher(teacher)
-                .date(date)
-                .examsSubjectsType(examsSubjectsType)
-                .totalScore(totalScore)
-                .build();
-
-        saveExam(exam);
-
-        saveExamTasks(exam, scores);
-
-        studentService.updateStudentSubjectInformation(student, examsSubjectsType, exam);
-
-        studentService.updateStudentTypeTasks(student, exam, scores);
-
-        return exam;
     }
 
 }

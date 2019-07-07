@@ -18,7 +18,6 @@ import ru.nazarfatichov.repositories.StudentExamTypeTaskRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.ExamService;
 
-import javax.jws.WebParam;
 import java.util.List;
 
 @Controller
@@ -40,7 +39,7 @@ public class ExamTypeTaskController {
     private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
 
     @RequestMapping(path = "/admin/exam-type-task", method = RequestMethod.GET)
-    public ModelAndView showExamTypeTaskPage(){
+    public ModelAndView showExamTypeTaskPage() {
         ModelAndView modelAndView = new ModelAndView("exam-type-task");
         modelAndView.addObject("examsTypes", examsSubjectsTypeRepository.findAll());
         modelAndView.addObject("examsTypeTasks", examsTypeTaskRepository.findAll());
@@ -48,9 +47,9 @@ public class ExamTypeTaskController {
     }
 
     @RequestMapping(path = "/admin/exam-type-task", method = RequestMethod.POST)
-    public String addExamTypeTask(ExamTypeTaskForm examTypeTaskForm){
+    public String addExamTypeTask(ExamTypeTaskForm examTypeTaskForm) {
         ExamsTypeTask examsTypeTask = examService.addExamsTypeTask(examTypeTaskForm);
-        for(User user : usersRepository.findAllByRole(Role.STUDENT)){
+        for (User user : usersRepository.findAllByRole(Role.STUDENT)) {
             StudentExamTypeTask studentExamTypeTask = StudentExamTypeTask.builder()
                     .total(0)
                     .totalRight(0)
@@ -64,7 +63,7 @@ public class ExamTypeTaskController {
 
     @RequestMapping(path = "/teacher/subject-tasks", method = RequestMethod.POST)
     @ResponseBody
-    public List<ExamsTypeTask> getExamsTypeTasksObject(@RequestParam(name = "subjectId") Long subjectId){
+    public List<ExamsTypeTask> getExamsTypeTasksObject(@RequestParam(name = "subjectId") Long subjectId) {
         return examsTypeTaskRepository.findAllByExamsSubjectsType_Id(subjectId);
     }
 }

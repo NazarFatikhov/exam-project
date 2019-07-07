@@ -1,18 +1,18 @@
 package ru.nazarfatichov.security.details;
 
-import java.util.Collection;
-import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.nazarfatichov.enums.UserState;
 import ru.nazarfatichov.models.User;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
- *
  * @author nazar
  */
-public class UserDetailsImpl implements UserDetails{
+public class UserDetailsImpl implements UserDetails {
 
     User user;
 
@@ -23,7 +23,7 @@ public class UserDetailsImpl implements UserDetails{
     public User getUser() {
         return user;
     }
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String userRole = user.getRole().name();
@@ -60,5 +60,5 @@ public class UserDetailsImpl implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
+
 }

@@ -7,11 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.nazarfatichov.models.StudentExamTypeTask;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentExamTypeTaskRepository extends JpaRepository<StudentExamTypeTask, Long> {
-    StudentExamTypeTask findFirstByStudent_IdAndExamsTypeTask_Id(Long userId, Long examsTypeTaskId);
+    Optional<StudentExamTypeTask> findFirstByStudent_IdAndExamsTypeTask_Id(Long userId, Long examsTypeTaskId);
 
-    List<StudentExamTypeTask> findAllByStudent_IdAndExamsTypeTask_ExamsSubjectsType_Id(Long studentId, Long examsTypeTaskId);
+    List<Optional<StudentExamTypeTask>> findAllByStudent_IdAndExamsTypeTask_ExamsSubjectsType_Id(Long studentId, Long examsTypeTaskId);
 
     @Modifying
     @Transactional

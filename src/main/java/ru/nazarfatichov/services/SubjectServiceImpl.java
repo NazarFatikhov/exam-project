@@ -55,7 +55,7 @@ public class SubjectServiceImpl implements SubjectService{
 
     @Override
     public void addExamsSubjectsType(ExamsSubjectsTypesForm examsSubjectsTypesForm) {
-        Subject subject = subjectRepository.findOneByName(examsSubjectsTypesForm.getSubject());
+        Subject subject = subjectRepository.findOneByName(examsSubjectsTypesForm.getSubject()).get();
 
         ExamsSubjectsType examsSubjectsType = ExamsSubjectsType.builder()
                 .maxScore(Integer.parseInt(examsSubjectsTypesForm.getMaxScore()))

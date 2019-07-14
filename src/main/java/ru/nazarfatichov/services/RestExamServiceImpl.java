@@ -19,10 +19,7 @@ import ru.nazarfatichov.transfer.RestUserDto;
 
 import javax.persistence.EntityNotFoundException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RestExamServiceImpl implements RestExamService {
@@ -50,8 +47,8 @@ public class RestExamServiceImpl implements RestExamService {
         List<Exam> exams = examRepository.findAll();
         List<RestExamDto> restExamDtos = new ArrayList<>();
         for(Exam exam : exams){
-            UserInformation teacherInformation = userInformationRepository.findFirstByUser_Id(exam.getTeacher().getId());
-            UserInformation studentInformation = userInformationRepository.findFirstByUser_Id(exam.getStudent().getId());
+            UserInformation teacherInformation = userInformationRepository.findFirstByUser_Id(exam.getTeacher().getId()).get();
+            UserInformation studentInformation = userInformationRepository.findFirstByUser_Id(exam.getStudent().getId()).get();
             List<ExamsTasks> examsTasks = examsTasksRepository.findAllByExam_Id(exam.getId());
 
             ExamMapper mapper = new ExamMapper();
@@ -63,9 +60,9 @@ public class RestExamServiceImpl implements RestExamService {
 
     @Override
     public RestExamDto getExamDtoById(Long id) {
-        Exam exam = examRepository.findOne(id);
-        UserInformation teacherInformation = userInformationRepository.findFirstByUser_Id(exam.getTeacher().getId());
-        UserInformation studentInformation = userInformationRepository.findFirstByUser_Id(exam.getStudent().getId());
+        Exam exam = examRepository.findById(id).get();
+        UserInformation teacherInformation = userInformationRepository.findFirstByUser_Id(exam.getTeacher().getId()).get();
+        UserInformation studentInformation = userInformationRepository.findFirstByUser_Id(exam.getStudent().getId()).get();
         List<ExamsTasks> examsTasks = examsTasksRepository.findAllByExam_Id(exam.getId());
         if(exam == null){
             throw new IllegalArgumentException("Incorrect exam id");
@@ -78,9 +75,9 @@ public class RestExamServiceImpl implements RestExamService {
 
     @Override
     public Exam updateExam(Long id, ExamDTO examDTO) throws ParseException {
-        Exam oldExamCandidate = examRepository.findOne(id);
+        Exam oldExamCandidate = examRepository.findById(id).get();
         User student = usersRepository.getOne(examDTO.getStudentId());
-        if(examRepository.findOne(id) == null) {
+        if(!examRepository.findById(id).isPresent()) {
             throw new EntityNotFoundException("exam");
         } else if(usersRepository.getOne(examDTO.getStudentId()) == null){
             throw new EntityNotFoundException("student");
@@ -91,7 +88,7 @@ public class RestExamServiceImpl implements RestExamService {
         Integer totalScore = Arrays.stream(examDTO.getScores()).mapToInt(Integer::intValue).sum();
         examRepository.updateExam(examDTO.getStudentId(), examDTO.getTeacherId(),
                 examDTO.getTypeId(), date, totalScore, oldExamCandidate.getId());
-        return examRepository.findOne(id);
+        return examRepository.findById(id).get();
     }
 
     @Override
@@ -101,6 +98,6 @@ public class RestExamServiceImpl implements RestExamService {
 
     @Override
     public void deleteExam(Long id) {
-        examRepository.delete(id);
+        examRepository.deleteById(id);
     }
 }

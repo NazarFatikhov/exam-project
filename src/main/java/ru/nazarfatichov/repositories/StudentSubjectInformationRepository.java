@@ -6,14 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nazarfatichov.models.StudentSubjectInformation;
 
-import java.lang.annotation.Native;
 import java.util.List;
 import java.util.Optional;
 
-public interface StudentSubjectInformationRepository extends JpaRepository<StudentSubjectInformation, Long> {
+public interface StudentSubjectInformationRepository
+        extends JpaRepository<StudentSubjectInformation, Long> {
+
     List<StudentSubjectInformation> findAllByUserId(Long userId);
 
-    StudentSubjectInformation findFirstByUser_IdAndExamsSubjectsType_Id(Long userId, Long typeId);
+    Optional<StudentSubjectInformation> findFirstByUser_IdAndExamsSubjectsType_Id(Long userId, Long typeId);
 
     @Modifying
     @Transactional

@@ -50,22 +50,22 @@ public class ExamServiceImpl implements ExamService{
         String studentSurname = userMemberParser.getUserSurname(examForm.getStudent());
         String teacherName = userMemberParser.getUserName(examForm.getTeacher());
         String teacherSurname = userMemberParser.getUserSurname(examForm.getTeacher());
-        UserInformation studentInformation =
+        Optional<UserInformation> studentInformationCandidate =
                 userInformationRepository.findFirstByNameAndSurnameAndUser_Role(studentName, studentSurname, Role.STUDENT);
-        UserInformation teacherInformation =
+        Optional<UserInformation> teacherInformationCandidate =
                 userInformationRepository.findFirstByNameAndSurnameAndUser_Role(teacherName, teacherSurname, Role.TEACHER);
-        User student = usersRepository.findOne(studentInformation.getUser().getId());
-        User teacher = usersRepository.findOne(teacherInformation.getUser().getId());
-        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examForm.getTypeId());
+        Optional<User> studentCandidate = usersRepository.findById(studentInformationCandidate.get().getUser().getId());
+        Optional<User> teacherCandidate = usersRepository.findById(teacherInformationCandidate.get().getUser().getId());
+        Optional<ExamsSubjectsType> examsSubjectsTypeCandidate = examsSubjectsTypeRepository.findById(examForm.getTypeId());
         Date date = examMemberParser.parseDate(examForm.getDate());
         Integer[] scores = examForm.getScores();
         Integer totalScore = Arrays.stream(scores).mapToInt(Integer::intValue).sum();
 
         Exam exam = Exam.builder()
-                .student(student)
-                .teacher(teacher)
+                .student(studentCandidate.get())
+                .teacher(teacherCandidate.get())
                 .date(date)
-                .examsSubjectsType(examsSubjectsType)
+                .examsSubjectsType(examsSubjectsTypeCandidate.get())
                 .totalScore(totalScore)
                 .build();
 
@@ -73,9 +73,9 @@ public class ExamServiceImpl implements ExamService{
 
         saveExamTasks(exam, scores);
 
-        studentService.updateStudentSubjectInformation(student, examsSubjectsType, exam);
+        studentService.updateStudentSubjectInformation(studentCandidate.get(), examsSubjectsTypeCandidate.get(), exam);
 
-        studentService.updateStudentTypeTasks(student, exam, scores);
+        studentService.updateStudentTypeTasks(studentCandidate.get(), exam, scores);
 
         return exam;
     }
@@ -83,12 +83,13 @@ public class ExamServiceImpl implements ExamService{
     @Override
     public ExamsTypeTask addExamsTypeTask(ExamTypeTaskForm examTypeTaskForm) {
         ExamsTypeTask examsTypeTask = ExamsTypeTask.builder()
-                .examsSubjectsType(examsSubjectsTypeRepository.findOne(examTypeTaskForm.getTypeId()))
+                .examsSubjectsType(examsSubjectsTypeRepository.findById(examTypeTaskForm.getTypeId()).get())
                 .tasksNumber(examTypeTaskForm.getTaskNumber())
                 .minScore(examTypeTaskForm.getMinScore())
                 .maxScore(examTypeTaskForm.getMaxScore())
                 .build();
 
+        ExamsTypeTask examsTypeTask1 = examsTypeTaskRepository.getOne(Long.valueOf("2"));
         return examsTypeTaskRepository.save(examsTypeTask);
     }
 
@@ -108,7 +109,7 @@ public class ExamServiceImpl implements ExamService{
         for (int i = 0; i < scores.length; i++) {
             examsTasks = ExamsTasks.builder()
                     .exam(exam)
-                    .examsTypeTask(examsTypeTaskRepository.findFirstByTasksNumberAndExamsSubjectsType_Id(i + 1, exam.getExamsSubjectsType().getId()))
+                    .examsTypeTask(examsTypeTaskRepository.findFirstByTasksNumberAndExamsSubjectsType_Id(i + 1, exam.getExamsSubjectsType().getId()).get())
                     .score(scores[i])
                     .build();
             examsTasksRepository.save(examsTasks);
@@ -120,9 +121,9 @@ public class ExamServiceImpl implements ExamService{
         String studentName = userMemberParser.getUserName(testForm.getStudent());
         String studentSurname = userMemberParser.getUserSurname(testForm.getStudent());
         UserInformation studentInformation =
-                userInformationRepository.findFirstByNameAndSurnameAndUser_Role(studentName, studentSurname, Role.STUDENT);
-        User student = usersRepository.findOne(studentInformation.getUser().getId());
-        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(testForm.getTypeId());
+                userInformationRepository.findFirstByNameAndSurnameAndUser_Role(studentName, studentSurname, Role.STUDENT).get();
+        User student = usersRepository.findById(studentInformation.getUser().getId()).get();
+        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findById(testForm.getTypeId()).get();
         Date date = examMemberParser.parseDate(testForm.getDate());
 
         Exam exam = Exam.builder()
@@ -140,9 +141,9 @@ public class ExamServiceImpl implements ExamService{
 
     @Override
     public Exam addExam(ExamDTO examDTO) throws IncorrectSumOfTasksException, ParseException {
-        User student = usersRepository.findOne(examDTO.getStudentId());
-        User teacher = usersRepository.findOne(examDTO.getTeacherId());
-        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findOne(examDTO.getTypeId());
+        User student = usersRepository.findById(examDTO.getStudentId()).get();
+        User teacher = usersRepository.findById(examDTO.getTeacherId()).get();
+        ExamsSubjectsType examsSubjectsType = examsSubjectsTypeRepository.findById(examDTO.getTypeId()).get();
         Date date = examMemberParser.parseDate(examDTO.getDate());
         Integer[] scores = examDTO.getScores();
         Integer totalScore = Arrays.stream(scores).mapToInt(Integer::intValue).sum();

@@ -42,21 +42,15 @@ public class UsersController {
 
     @Autowired
     private UserInformationRepository userInformationRepository;
-
-    @Autowired
-    private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
-
-    @Autowired
-    private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
     
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ModelAndView getUsers(Principal principal){
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
-        UserInformation userInformation = userInformationRepository.findFirstByUser_Id(user.get().getId());
+        Optional<UserInformation> userInformationCandidate = userInformationRepository.findFirstByUser_Id(user.get().getId());
         ModelAndView modelAndView = new ModelAndView("users");
         UserWithSubjectsDTO userWithSubjectsDTO = UserWithSubjectsDTO.builder()
-                .userName(userInformation.getName())
-                .userSurname(userInformation.getSurname())
+                .userName(userInformationCandidate.get().getName())
+                .userSurname(userInformationCandidate.get().getSurname())
                 .studentSubjectInformation(studentService.getStudentSubjectInformation(user.get().getId()))
                 .build();
         modelAndView.addObject("userDTO", userWithSubjectsDTO);

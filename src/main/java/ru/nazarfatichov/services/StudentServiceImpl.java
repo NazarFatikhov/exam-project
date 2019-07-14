@@ -9,6 +9,7 @@ import ru.nazarfatichov.repositories.*;
 import ru.nazarfatichov.transfer.UserDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -21,9 +22,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
-
-    @Autowired
-    private UserInformationRepository userInformationRepository;
 
     @Autowired
     private ExamsTypeTaskRepository examsTypeTaskRepository;
@@ -45,8 +43,8 @@ public class StudentServiceImpl implements StudentService {
     public void addStudentSubjectInformation(StudentSubjectInformationForm studentSubjectInformationForm) {
 
         StudentSubjectInformation studentSubjectInformation = StudentSubjectInformation.builder()
-                .user(usersRepository.findOne(studentSubjectInformationForm.getStudent()))
-                .examsSubjectsType(examsSubjectsTypeRepository.findOne(studentSubjectInformationForm.getExamsSubjectsType()))
+                .user(usersRepository.findById(studentSubjectInformationForm.getStudent()).get())
+                .examsSubjectsType(examsSubjectsTypeRepository.findById(studentSubjectInformationForm.getExamsSubjectsType()).get())
                 .averageExamScore(studentSubjectInformationForm.getAverageExamScore())
                 .averageTestScore(studentSubjectInformationForm.getAverageTestScore())
                 .lastExamScore(studentSubjectInformationForm.getLastExamScore())
@@ -59,9 +57,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudentSubjectInformation(User student, ExamsSubjectsType examsSubjectsType, Exam exam) {
-        StudentSubjectInformation studentSubjectInformation =
+        Optional<StudentSubjectInformation> studentSubjectInformationCandidate =
                 studentSubjectInformationRepository.findFirstByUser_IdAndExamsSubjectsType_Id(student.getId(), examsSubjectsType.getId());
-        Integer examCount = studentSubjectInformation.getExamCount();
+        Integer examCount = studentSubjectInformationCandidate.get().getExamCount();
         if(examCount == null){
             examCount = 1;
         }
@@ -69,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
             examCount += 1;
         }
         Integer lastExamScore = exam.getTotalScore();
-        Float averageScore = studentSubjectInformation.getAverageExamScore();
+        Float averageScore = studentSubjectInformationCandidate.get().getAverageExamScore();
         if(averageScore == null){
             averageScore = Float.valueOf(0);
         }
@@ -80,24 +78,24 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudentTypeTasks(User student, Exam exam, Integer[] scores) {
-        List<ExamsTypeTask> examsTypeTasks = examsTypeTaskRepository.findAllByExamsSubjectsType_Id(exam.getExamsSubjectsType().getId());
-        for(ExamsTypeTask e : examsTypeTasks){
-            StudentExamTypeTask studentExamTypeTask
-                    = studentExamTypeTaskRepository.findFirstByStudent_IdAndExamsTypeTask_Id(student.getId(), e.getId());
-            if(e.getMaxScore() == 1){
-                Integer total = studentExamTypeTask.getTotal() + 1;
-                Integer totalRight = studentExamTypeTask.getTotalRight() + scores[e.getTasksNumber() - 1];
-                studentExamTypeTaskRepository.setStudentExamTaskTotalRightAndTotal(totalRight, total, e.getId(), student.getId());
+        List<ExamsTypeTask> examsTypeTasksCandidates = examsTypeTaskRepository.findAllByExamsSubjectsType_Id(exam.getExamsSubjectsType().getId());
+        for(ExamsTypeTask ex : examsTypeTasksCandidates){
+            Optional<StudentExamTypeTask> studentExamTypeTaskCandidate
+                    = studentExamTypeTaskRepository.findFirstByStudent_IdAndExamsTypeTask_Id(student.getId(), ex.getId());
+            if(ex.getMaxScore() == 1){
+                Integer total = studentExamTypeTaskCandidate.get().getTotal() + 1;
+                Integer totalRight = studentExamTypeTaskCandidate.get().getTotalRight() + scores[ex.getTasksNumber() - 1];
+                studentExamTypeTaskRepository.setStudentExamTaskTotalRightAndTotal(totalRight, total, ex.getId(), student.getId());
             }else {
-                Integer total = studentExamTypeTask.getTotal() + 1;
-                Float averageScore = studentExamTypeTask.getAverageScore();
+                Integer total = studentExamTypeTaskCandidate.get().getTotal() + 1;
+                Float averageScore = studentExamTypeTaskCandidate.get().getAverageScore();
                 if(averageScore == null){
                     averageScore = Float.valueOf(0);
                 }
-                Float newAverageScore = (averageScore + scores[e.getTasksNumber()-1])/total;
-                Integer score = scores[e.getTasksNumber() - 1];
+                Float newAverageScore = (averageScore + scores[ex.getTasksNumber()-1])/total;
+                Integer score = scores[ex.getTasksNumber() - 1];
                 studentExamTypeTaskRepository.setStudentExamTaskTotalAndScores(total,
-                        score, newAverageScore, e.getId(), student.getId());
+                        score, newAverageScore, ex.getId(), student.getId());
             }
         }
     }

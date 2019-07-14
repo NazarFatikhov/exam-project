@@ -4,7 +4,6 @@ import ru.nazarfatichov.annotations.TasksConstraint;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Arrays;
 
 public class TaskScoreValidator implements ConstraintValidator<TasksConstraint, Integer[]> {
     @Override

@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.ExamForm;
-import ru.nazarfatichov.models.ExamsSubjectsType;
-import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
@@ -18,11 +16,8 @@ import ru.nazarfatichov.services.ExamService;
 import ru.nazarfatichov.services.StudentService;
 import ru.nazarfatichov.services.SubjectService;
 
-import javax.jws.WebParam;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.util.*;
 
 @Controller
 public class ExamController {

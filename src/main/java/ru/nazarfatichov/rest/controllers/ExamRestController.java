@@ -5,26 +5,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
-import ru.nazarfatichov.forms.ExamForm;
 import ru.nazarfatichov.models.Exam;
-import ru.nazarfatichov.models.User;
-import ru.nazarfatichov.repositories.ExamRepository;
-import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
-import ru.nazarfatichov.repositories.UsersRepository;
-import ru.nazarfatichov.services.ExamMemberParser;
-import ru.nazarfatichov.services.ExamService;
 import ru.nazarfatichov.services.RestExamService;
-import ru.nazarfatichov.services.UserMemberParser;
 import ru.nazarfatichov.transfer.ExamDTO;
 import ru.nazarfatichov.transfer.ExceptionDTO;
 import ru.nazarfatichov.transfer.RestExamDto;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import javax.swing.text.html.parser.Entity;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Controller

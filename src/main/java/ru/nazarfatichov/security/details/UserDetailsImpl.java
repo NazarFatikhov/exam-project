@@ -1,12 +1,13 @@
 package ru.nazarfatichov.security.details;
 
-import java.util.Collection;
-import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.nazarfatichov.enums.UserState;
 import ru.nazarfatichov.models.User;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  *

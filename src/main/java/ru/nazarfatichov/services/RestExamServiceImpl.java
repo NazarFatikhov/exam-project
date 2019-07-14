@@ -14,12 +14,13 @@ import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.mappers.ExamMapper;
 import ru.nazarfatichov.transfer.ExamDTO;
 import ru.nazarfatichov.transfer.RestExamDto;
-import ru.nazarfatichov.transfer.RestExamSubjectTypeDto;
-import ru.nazarfatichov.transfer.RestUserDto;
 
 import javax.persistence.EntityNotFoundException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class RestExamServiceImpl implements RestExamService {

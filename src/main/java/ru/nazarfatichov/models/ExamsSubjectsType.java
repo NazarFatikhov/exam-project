@@ -1,12 +1,12 @@
 package ru.nazarfatichov.models;
 
-import javax.persistence.*;
-
-import lombok.*;
-import org.hibernate.annotations.GeneratorType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.nazarfatichov.enums.Type;
-import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
-import ru.nazarfatichov.forms.UserForm;
+
+import javax.persistence.*;
 
 /**
  *

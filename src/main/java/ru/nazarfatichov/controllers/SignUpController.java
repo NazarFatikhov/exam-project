@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.forms.SignUpForm;
 import ru.nazarfatichov.services.SignUpService;
 
@@ -40,7 +41,7 @@ public class SignUpController {
             return "signup";
         }
         signUpService.signUp(signUpForm);
-        return "redirect:/signin";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(SignUpController.class, "showSignUpPage").build();
     }
     
     @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.GET)
@@ -51,7 +52,7 @@ public class SignUpController {
     @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.POST)
     public String addTeacher(SignUpForm userForm){
         signUpService.signUpteacher(userForm);
-        return "redirect:/users";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(SignUpController.class, "showSignUpTeacher").build();
     }
     
 }

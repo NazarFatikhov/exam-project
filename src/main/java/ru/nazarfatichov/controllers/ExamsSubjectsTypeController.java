@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
 import ru.nazarfatichov.services.SubjectService;
@@ -38,7 +39,7 @@ public class ExamsSubjectsTypeController {
     @RequestMapping(value = "/admin/exams-subjects-type", method = RequestMethod.POST)
     public String addExamsSubjectsTypes(ExamsSubjectsTypesForm examsSubjectsTypesForm){
         subjectService.addExamsSubjectsType(examsSubjectsTypesForm);
-        return "redirect:/admin/exams-subjects-type";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(ExamsSubjectsTypeController.class, "showAllExamsSubjectsTypes").build();
     }
 
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.forms.SubjectForm;
 import ru.nazarfatichov.services.SubjectService;
 
@@ -33,6 +34,6 @@ public class SubjectController {
     @RequestMapping(path = "/admin/add-subject", method = RequestMethod.POST)
     public String addSubject(SubjectForm subjectForm){
         subjectService.addSubject(subjectForm);
-        return "redirect:/admin/subjects";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(SubjectController.class, "showAllSubjects").build();
     }
 }

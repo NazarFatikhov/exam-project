@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.models.User;
@@ -34,6 +35,6 @@ public class StudentSubjectInformationController {
     @RequestMapping(path = "/admin/student-subject-information", method = RequestMethod.POST)
     public String addStudentSubjectInformation(StudentSubjectInformationForm studentSubjectInformationForm){
         studentService.addStudentSubjectInformation(studentSubjectInformationForm);
-        return "redirect:/admin/student-subject-information";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(StudentSubjectInformationController.class, "showStudentsSubjectInformation", new ModelMap()).build();
     }
 }

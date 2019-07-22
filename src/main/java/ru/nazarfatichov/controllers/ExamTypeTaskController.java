@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.forms.ExamTypeTaskForm;
 import ru.nazarfatichov.models.ExamsTypeTask;
@@ -58,7 +59,7 @@ public class ExamTypeTaskController {
                     .build();
             studentExamTypeTaskRepository.save(studentExamTypeTask);
         }
-        return "redirect:/admin/exam-type-task";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(ExamTypeTaskController.class, "showExamTypeTaskPage").build();
     }
 
     @RequestMapping(path = "/teacher/subject-tasks", method = RequestMethod.POST)

@@ -1,11 +1,13 @@
 package ru.nazarfatichov.controllers;
 
+import jdk.internal.org.objectweb.asm.commons.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.forms.TestForm;
@@ -56,6 +58,6 @@ public class TestController {
         } catch (IncorrectSumOfTasksException e) {
             e.printStackTrace();
         }
-        return "redirect:/teacher/exam/new-test";
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(TestController.class, "getAddNewTestPage", modelMap).build();
     }
 }

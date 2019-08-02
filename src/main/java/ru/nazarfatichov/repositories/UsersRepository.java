@@ -1,6 +1,7 @@
 package ru.nazarfatichov.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.models.User;
 

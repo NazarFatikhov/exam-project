@@ -19,8 +19,8 @@ public class StudentSubjectInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private User user;
 
     @ManyToOne(targetEntity = ExamsSubjectsType.class)

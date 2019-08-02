@@ -20,6 +20,7 @@ import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.ExamService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ExamTypeTaskController {
@@ -65,6 +66,8 @@ public class ExamTypeTaskController {
     @RequestMapping(path = "/teacher/subject-tasks", method = RequestMethod.POST)
     @ResponseBody
     public List<ExamsTypeTask> getExamsTypeTasksObject(@RequestParam(name = "subjectId") Long subjectId){
-        return examsTypeTaskRepository.findAllByExamsSubjectsType_Id(subjectId);
+        List<ExamsTypeTask> examsTypeTaskList = examsTypeTaskRepository.findAllByExamsSubjectsType_Id(subjectId);
+        examsTypeTaskList.forEach(s -> s.getExamsSubjectsType().setExamsTypeTasks(null));
+        return examsTypeTaskList;
     }
 }

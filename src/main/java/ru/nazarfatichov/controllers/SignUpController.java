@@ -41,7 +41,7 @@ public class SignUpController {
             return "signup";
         }
         signUpService.signUp(signUpForm);
-        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(SignUpController.class, "showSignUpPage").build();
+        return "redirect:" + MvcUriComponentsBuilder.fromMethodName(SignInController.class, "showSignInPage").build();
     }
     
     @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class SignUpController {
     
     @RequestMapping(path = "/admin/signup-teacher", method = RequestMethod.POST)
     public String addTeacher(SignUpForm userForm){
-        signUpService.signUpteacher(userForm);
+        signUpService.signUpTeacher(userForm);
         return "redirect:" + MvcUriComponentsBuilder.fromMethodName(SignUpController.class, "showSignUpTeacher").build();
     }
     

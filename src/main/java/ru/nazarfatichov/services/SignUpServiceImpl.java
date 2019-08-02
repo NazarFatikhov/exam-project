@@ -43,7 +43,15 @@ public class SignUpServiceImpl implements SignUpService{
         
         String hashPassword = passwordEncoder.encode(signUpForm.getPassword());
 
+        UserInformation userInformation = UserInformation.builder()
+                .name(signUpForm.getName())
+                .surname(signUpForm.getSurname())
+                .build();
+
+        userInformationRepository.save(userInformation);
+
         User user = User.builder()
+                .userInformation(userInformation)
                 .emailAdress(signUpForm.getEmail())
                 .hashPassword(hashPassword)
                 .role(Role.STUDENT)
@@ -52,13 +60,6 @@ public class SignUpServiceImpl implements SignUpService{
 
         userRepository.save(user);
 
-        UserInformation userInformation = UserInformation.builder()
-                .name(signUpForm.getName())
-                .surname(signUpForm.getSurname())
-                .user(user)
-                .build();
-
-        userInformationRepository.save(userInformation);
 
 
         initStudentSubjectInformation(user);
@@ -67,10 +68,18 @@ public class SignUpServiceImpl implements SignUpService{
     }
 
     @Override
-    public void signUpteacher(SignUpForm signUpForm) {
+    public void signUpTeacher(SignUpForm signUpForm) {
         String hashPassword = passwordEncoder.encode(signUpForm.getPassword());
 
+        UserInformation userInformation = UserInformation.builder()
+                .name(signUpForm.getName())
+                .surname(signUpForm.getSurname())
+                .build();
+
+        userInformationRepository.save(userInformation);
+
         User user = User.builder()
+                .userInformation(userInformation)
                 .emailAdress(signUpForm.getEmail())
                 .hashPassword(hashPassword)
                 .role(Role.TEACHER)
@@ -79,13 +88,6 @@ public class SignUpServiceImpl implements SignUpService{
 
         userRepository.save(user);
 
-        UserInformation userInformation = UserInformation.builder()
-                .name(signUpForm.getName())
-                .surname(signUpForm.getSurname())
-                .user(user)
-                .build();
-
-        userInformationRepository.save(userInformation);
 
     }
 

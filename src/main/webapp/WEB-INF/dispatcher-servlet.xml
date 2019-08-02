@@ -11,7 +11,7 @@
         <property name="username" value="exam_admin"/>
         <property name="password" value="123"/>
         <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:5432/exam"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/exam_refactoring"/>
     </bean>
 
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">

@@ -18,9 +18,11 @@ import ru.nazarfatichov.models.UserInformation;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
 import ru.nazarfatichov.services.StudentService;
+import ru.nazarfatichov.transfer.UserDTO;
 import ru.nazarfatichov.transfer.UserWithSubjectsDTO;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +42,8 @@ public class UsersController {
     @Autowired
     private UserInformationRepository userInformationRepository;
     
-    @RequestMapping(path = "/users", method = RequestMethod.GET)
-    public ModelAndView getUsers(Principal principal){
+    @RequestMapping(path = "/profile", method = RequestMethod.GET)
+    public ModelAndView showProfilePage(Principal principal){
         Optional<User> user = usersRepository.findOneByEmailAdress(principal.getName());
         Optional<UserInformation> userInformationCandidate = userInformationRepository.findFirstByUser_Id(user.get().getId());
         ModelAndView modelAndView = new ModelAndView("users");
@@ -58,14 +60,20 @@ public class UsersController {
 
     @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.POST)
     @ResponseBody
-    public List<UserInformation> getStudentList(@RequestParam(name = "startString") String startString){
-        return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.STUDENT);
+    public List<UserDTO> getStudentList(@RequestParam(name = "startString") String startString){
+        List<UserInformation> userInformationList = userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.STUDENT       );
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userInformationList.stream().forEach(teacherInformation -> userDTOList.add(new UserDTO(teacherInformation.getName(), teacherInformation.getSurname())));
+        return userDTOList;
     }
 
     @RequestMapping(path = "/teacher/exam/get-teachers", method = RequestMethod.POST)
     @ResponseBody
-    public List<UserInformation> getTeacherList(@RequestParam(name = "startString") String startString){
-        return userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.TEACHER);
+    public List<UserDTO> getTeacherList(@RequestParam(name = "startString") String startString){
+        List<UserInformation> userInformationList = userInformationRepository.findAllByNameStartingWithAndUser_Role(startString, Role.TEACHER);
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userInformationList.stream().forEach(teacherInformation -> userDTOList.add(new UserDTO(teacherInformation.getName(), teacherInformation.getSurname())));
+        return userDTOList;
     }
 
     @RequestMapping(path = "/teacher/exam/get-students", method = RequestMethod.GET)

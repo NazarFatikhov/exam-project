@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/users").authenticated()
+                    .antMatchers("/profile").authenticated()
                     .antMatchers("/sigin").permitAll()
                     .antMatchers("/signup").permitAll()
                     .antMatchers("/admin/**").hasAuthority("ADMIN")
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .formLogin()
                     .usernameParameter("emailAdress")
-                    .defaultSuccessUrl("/users")
+                    .defaultSuccessUrl("/profile")
                     .loginPage("/signin");
         http.csrf().disable();
     }

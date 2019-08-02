@@ -20,7 +20,7 @@ public class ExamsTasks {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "exam_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Exam exam;
 
     @ManyToOne

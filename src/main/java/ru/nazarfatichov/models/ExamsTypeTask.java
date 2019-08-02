@@ -12,16 +12,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "exams_type_task", uniqueConstraints = {@UniqueConstraint(columnNames = {"exams_type_id", "task_number"})})
+@Table(name = "exams_type_task", uniqueConstraints = {@UniqueConstraint(columnNames = {"exams_subjects_type_id", "task_number"})})
 public class ExamsTypeTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne(targetEntity = ExamsSubjectsType.class)
-    @JoinColumn(name = "exams_type_id", nullable = false)
-    private ExamsSubjectsType examsSubjectsType;
 
     @Column(nullable = false, name = "task_number")
     private Integer tasksNumber;
@@ -31,4 +27,9 @@ public class ExamsTypeTask {
 
     @Column(nullable = false, name = "max_score")
     private Integer maxScore;
+
+    @ManyToOne
+    @JoinColumn(name = "exams_subjects_type_id")
+    private ExamsSubjectsType examsSubjectsType;
+
 }

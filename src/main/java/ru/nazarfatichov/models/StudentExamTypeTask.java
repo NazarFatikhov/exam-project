@@ -20,8 +20,8 @@ public class StudentExamTypeTask {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @ManyToOne(targetEntity = User.class)
-        @JoinColumn(name = "student_id", nullable = false)
+        @ManyToOne
+        @JoinColumn(nullable = false)
         private User student;
 
         @ManyToOne(targetEntity = ExamsTypeTask.class)

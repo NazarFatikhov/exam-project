@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ru.nazarfatichov.enums.Type;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  *
@@ -38,6 +39,9 @@ public class ExamsSubjectsType {
     @ManyToOne(targetEntity = Subject.class)
     @JoinColumn(name = "subject_id")
     private Subject subject;
+
+    @OneToMany(mappedBy = "examsSubjectsType")
+    private List<ExamsTypeTask> examsTypeTasks;
 
     @Override
     public String toString() {

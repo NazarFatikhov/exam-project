@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +21,8 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "student_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private User student;
 
     @ManyToOne(targetEntity = ExamsSubjectsType.class)
@@ -37,5 +38,8 @@ public class Exam {
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "teacher_id", nullable = false)
     private User teacher;
+
+    @OneToMany(mappedBy = "exam")
+    private List<ExamsTasks> examsTasksList;
 
 }

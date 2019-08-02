@@ -27,15 +27,14 @@ public class UserInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id")
-    private User user;
     
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String surname;
+
+    @OneToOne(mappedBy = "userInformation")
+    private User user;
 
     @Override
     public String toString() {

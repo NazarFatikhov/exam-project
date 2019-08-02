@@ -9,5 +9,5 @@ import ru.nazarfatichov.forms.SignUpForm;
 public interface SignUpService {
     public void signUp(SignUpForm signUpForm);
     
-    public void signUpteacher(SignUpForm signUpForm);
+    public void signUpTeacher(SignUpForm signUpForm);
 }

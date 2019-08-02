@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.exam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,9 @@ import ru.nazarfatichov.repositories.ExamRepository;
 import ru.nazarfatichov.repositories.ExamsTasksRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
+import ru.nazarfatichov.services.exam.ExamService;
+import ru.nazarfatichov.services.exam.RestExamService;
+import ru.nazarfatichov.services.exam.parser.ExamMemberParser;
 import ru.nazarfatichov.services.mappers.ExamMapper;
 import ru.nazarfatichov.transfer.ExamDTO;
 import ru.nazarfatichov.transfer.RestExamDto;

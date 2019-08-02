@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.subject;
 
 import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
 import ru.nazarfatichov.forms.SubjectForm;

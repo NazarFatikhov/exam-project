@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

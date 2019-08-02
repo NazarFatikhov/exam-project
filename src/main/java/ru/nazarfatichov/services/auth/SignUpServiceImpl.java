@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

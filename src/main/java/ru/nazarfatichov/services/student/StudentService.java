@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.student;
 
 import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.Exam;

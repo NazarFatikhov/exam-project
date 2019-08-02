@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.exam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,9 @@ import ru.nazarfatichov.forms.ExamTypeTaskForm;
 import ru.nazarfatichov.forms.TestForm;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
+import ru.nazarfatichov.services.student.StudentService;
+import ru.nazarfatichov.services.user.UserMemberParser;
+import ru.nazarfatichov.services.exam.parser.ExamMemberParser;
 import ru.nazarfatichov.transfer.ExamDTO;
 
 import java.text.ParseException;
@@ -17,7 +20,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
-public class ExamServiceImpl implements ExamService{
+public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private ExamRepository examRepository;

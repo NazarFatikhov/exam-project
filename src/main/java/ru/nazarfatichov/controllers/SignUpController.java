@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.forms.SignUpForm;
-import ru.nazarfatichov.services.SignUpService;
+import ru.nazarfatichov.services.auth.SignUpService;
 
 import javax.validation.Valid;
 

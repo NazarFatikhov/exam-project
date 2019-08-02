@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.exam.parser;
 
 import java.text.ParseException;
 import java.util.Date;

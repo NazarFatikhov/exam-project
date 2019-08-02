@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.exam.parser;
 
 import org.springframework.stereotype.Service;
 

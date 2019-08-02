@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,7 @@ import ru.nazarfatichov.enums.Role;
 import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
+import ru.nazarfatichov.services.student.StudentService;
 
 import java.util.List;
 import java.util.Optional;

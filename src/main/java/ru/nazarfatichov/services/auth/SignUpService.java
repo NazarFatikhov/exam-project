@@ -1,4 +1,4 @@
-package ru.nazarfatichov.services;
+package ru.nazarfatichov.services.auth;
 
 import ru.nazarfatichov.forms.SignUpForm;
 

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.enums.Type;
 import ru.nazarfatichov.forms.ExamsSubjectsTypesForm;
-import ru.nazarfatichov.services.SubjectService;
+import ru.nazarfatichov.services.subject.SubjectService;
 import ru.nazarfatichov.transfer.ExamsSubjectsTypeDTO;
 
 import java.util.Arrays;

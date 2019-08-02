@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.nazarfatichov.forms.SubjectForm;
-import ru.nazarfatichov.services.SubjectService;
+import ru.nazarfatichov.services.subject.SubjectService;
 
 /**
  *

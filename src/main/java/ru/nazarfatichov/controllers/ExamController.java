@@ -13,9 +13,9 @@ import ru.nazarfatichov.forms.ExamForm;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
-import ru.nazarfatichov.services.ExamService;
-import ru.nazarfatichov.services.StudentService;
-import ru.nazarfatichov.services.SubjectService;
+import ru.nazarfatichov.services.exam.ExamService;
+import ru.nazarfatichov.services.student.StudentService;
+import ru.nazarfatichov.services.subject.SubjectService;
 
 import javax.validation.Valid;
 import java.text.ParseException;

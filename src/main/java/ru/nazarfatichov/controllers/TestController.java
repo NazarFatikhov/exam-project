@@ -1,6 +1,5 @@
 package ru.nazarfatichov.controllers;
 
-import jdk.internal.org.objectweb.asm.commons.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +14,7 @@ import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
-import ru.nazarfatichov.services.ExamService;
+import ru.nazarfatichov.services.exam.ExamService;
 
 import javax.validation.Valid;
 import java.security.Principal;

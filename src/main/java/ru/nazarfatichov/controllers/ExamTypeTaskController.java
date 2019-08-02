@@ -17,10 +17,9 @@ import ru.nazarfatichov.repositories.ExamsSubjectsTypeRepository;
 import ru.nazarfatichov.repositories.ExamsTypeTaskRepository;
 import ru.nazarfatichov.repositories.StudentExamTypeTaskRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
-import ru.nazarfatichov.services.ExamService;
+import ru.nazarfatichov.services.exam.ExamService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class ExamTypeTaskController {

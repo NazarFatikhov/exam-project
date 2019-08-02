@@ -9,8 +9,8 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import ru.nazarfatichov.forms.StudentSubjectInformationForm;
 import ru.nazarfatichov.models.ExamsSubjectsType;
 import ru.nazarfatichov.models.User;
-import ru.nazarfatichov.services.StudentService;
-import ru.nazarfatichov.services.SubjectService;
+import ru.nazarfatichov.services.student.StudentService;
+import ru.nazarfatichov.services.subject.SubjectService;
 
 import java.util.List;
 

@@ -17,7 +17,7 @@ import ru.nazarfatichov.models.User;
 import ru.nazarfatichov.models.UserInformation;
 import ru.nazarfatichov.repositories.UserInformationRepository;
 import ru.nazarfatichov.repositories.UsersRepository;
-import ru.nazarfatichov.services.StudentService;
+import ru.nazarfatichov.services.student.StudentService;
 import ru.nazarfatichov.transfer.UserDTO;
 import ru.nazarfatichov.transfer.UserWithSubjectsDTO;
 

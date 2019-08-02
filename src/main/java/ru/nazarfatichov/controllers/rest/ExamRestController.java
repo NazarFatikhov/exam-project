@@ -1,4 +1,4 @@
-package ru.nazarfatichov.rest.controllers;
+package ru.nazarfatichov.controllers.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.nazarfatichov.exceptions.IncorrectSumOfTasksException;
 import ru.nazarfatichov.models.Exam;
-import ru.nazarfatichov.services.RestExamService;
+import ru.nazarfatichov.services.exam.RestExamService;
 import ru.nazarfatichov.transfer.ExamDTO;
 import ru.nazarfatichov.transfer.ExceptionDTO;
 import ru.nazarfatichov.transfer.RestExamDto;

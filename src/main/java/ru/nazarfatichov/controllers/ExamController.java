@@ -50,18 +50,13 @@ public class ExamController {
     }
 
     @RequestMapping(path = "/teacher/exam/new-exam", method = RequestMethod.POST)
-    public String saveNewExam(ModelMap modelMap, @Valid ExamForm examForm, BindingResult result){
-        try {
-            if(result.hasErrors()){
-                modelMap.addAttribute("errors", result.getAllErrors());
-                return showNewExamPage(modelMap);
-            }
-            examService.addExam(examForm);
-        } catch (IncorrectSumOfTasksException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public String saveNewExam(ModelMap modelMap, @Valid ExamForm examForm, BindingResult result) throws IncorrectSumOfTasksException, ParseException {
+        if(result.hasErrors()){
+            modelMap.addAttribute("errors", result.getAllErrors());
+            return showNewExamPage(modelMap);
         }
+        examService.addExam(examForm);
+
         return "redirect:" + MvcUriComponentsBuilder.fromMethodName(ExamController.class, "showNewExamPage", new ModelMap()).build();
     }
 

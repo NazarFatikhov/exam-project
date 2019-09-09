@@ -37,7 +37,7 @@ public class User{
     @Enumerated(value = EnumType.STRING)
     private UserState state;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_information_id", nullable = false)
     private UserInformation userInformation;
 

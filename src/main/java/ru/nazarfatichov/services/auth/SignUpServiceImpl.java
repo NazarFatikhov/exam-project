@@ -9,6 +9,7 @@ import ru.nazarfatichov.forms.SignUpForm;
 import ru.nazarfatichov.models.*;
 import ru.nazarfatichov.repositories.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,21 +24,20 @@ public class SignUpServiceImpl implements SignUpService{
     
     @Autowired
     private UsersRepository userRepository;
-    @Autowired
-    private UserInformationRepository userInformationRepository;
 
     @Autowired
     private ExamsSubjectsTypeRepository examsSubjectsTypeRepository;
 
-    @Autowired
-    private StudentSubjectInformationRepository studentSubjectInformationRepository;
 
     @Autowired
     private ExamsTypeTaskRepository examsTypeTaskRepository;
 
     @Autowired
+    private StudentSubjectInformationRepository studentSubjectInformationRepository;
+
+    @Autowired
     private StudentExamTypeTaskRepository studentExamTypeTaskRepository;
-    
+
     @Override
     public void signUp(SignUpForm signUpForm) {
         
@@ -47,8 +47,6 @@ public class SignUpServiceImpl implements SignUpService{
                 .name(signUpForm.getName())
                 .surname(signUpForm.getSurname())
                 .build();
-
-        userInformationRepository.save(userInformation);
 
         User user = User.builder()
                 .userInformation(userInformation)
@@ -60,10 +58,9 @@ public class SignUpServiceImpl implements SignUpService{
 
         userRepository.save(user);
 
+        studentSubjectInformationRepository.saveAll(createStudentSubjectInformationList(user));
 
-
-        initStudentSubjectInformation(user);
-        initStudentExamTypeTasks(user);
+        studentExamTypeTaskRepository.saveAll(createStudentExamTypeTaskList(user));
 
     }
 
@@ -75,8 +72,6 @@ public class SignUpServiceImpl implements SignUpService{
                 .name(signUpForm.getName())
                 .surname(signUpForm.getSurname())
                 .build();
-
-        userInformationRepository.save(userInformation);
 
         User user = User.builder()
                 .userInformation(userInformation)
@@ -91,18 +86,25 @@ public class SignUpServiceImpl implements SignUpService{
 
     }
 
-    private void initStudentSubjectInformation(User student){
+    private List<StudentSubjectInformation> createStudentSubjectInformationList(User student){
+        List<StudentSubjectInformation> studentSubjectInformationList = new ArrayList<>();
+
         List<ExamsSubjectsType> examsSubjectsTypes = examsSubjectsTypeRepository.findAll();
-        for(ExamsSubjectsType e : examsSubjectsTypes) {
-            StudentSubjectInformation studentSubjectInformation = StudentSubjectInformation.builder()
-                    .user(student)
-                    .examsSubjectsType(e)
-                    .build();
-            studentSubjectInformationRepository.save(studentSubjectInformation);
-        }
+        examsSubjectsTypes.forEach(t -> studentSubjectInformationList.add(
+                StudentSubjectInformation.builder()
+                        .user(student)
+                        .examsSubjectsType(t)
+                        .examCount(0)
+                        .testCount(0)
+                        .build()
+                )
+        );
+
+        return studentSubjectInformationList;
     }
 
-    private void initStudentExamTypeTasks(User student){
+    private List<StudentExamTypeTask> createStudentExamTypeTaskList(User student){
+        List<StudentExamTypeTask> studentExamTypeTaskList = new ArrayList<>();
         List<ExamsSubjectsType> examsSubjectsTypes = examsSubjectsTypeRepository.findAll();
         for(ExamsSubjectsType type : examsSubjectsTypes){
             List<ExamsTypeTask> examsTypeTasks = examsTypeTaskRepository.findAllByExamsSubjectsType_Id(type.getId());
@@ -113,9 +115,10 @@ public class SignUpServiceImpl implements SignUpService{
                         .totalRight(0)
                         .total(0)
                         .build();
-                studentExamTypeTaskRepository.save(studentExamTypeTask);
+                studentExamTypeTaskList.add(studentExamTypeTask);
             }
         }
+        return studentExamTypeTaskList;
     }
     
 }

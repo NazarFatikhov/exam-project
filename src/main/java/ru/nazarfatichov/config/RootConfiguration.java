@@ -13,7 +13,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(value = "ru.nazarfatichov")
 public class RootConfiguration {
 
     @Bean
@@ -45,29 +44,5 @@ public class RootConfiguration {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
-//    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-//        <property name="username" value="exam_admin"/>
-//        <property name="password" value="123"/>
-//        <property name="driverClassName" value="org.postgresql.Driver"/>
-//        <property name="url" value="jdbc:postgresql://localhost:5432/exam_refactoring"/>
-//    </bean>
-//
-//    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-//        <property name="templateLoaderPath" value=""/>
-//    </bean>
-//
-//    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-//        <property name="prefix" value="/templates/"/>
-//        <property name="suffix" value=".ftl"/>
-//    </bean>
-//    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-//
-//    <mvc:annotation-driven/>
-//    <mvc:resources mapping="/css/**" location="/css/"/>
-//    <mvc:resources mapping="/js/**" location="/js/"/>
-//    <mvc:resources mapping="/images/**" location="/images/"/>
-
-
 
 }

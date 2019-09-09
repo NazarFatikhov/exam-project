@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(value = "ru.nazarfatichov")
 @EnableJpaRepositories(basePackages = "ru.nazarfatichov.repositories")
 @EnableTransactionManagement
 public class JpaConfiguration {
